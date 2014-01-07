@@ -88,7 +88,6 @@ set viminfo='1000,f1,:500,/500,<50,s10,h
 "au BufNewFile,BufRead *.clj set listchars-=tab:I.
 "FIXME check
 
-map Q gqap
 set nowrap
 set wildignore=*.o,*.obj,*.bak,*.exe,*~
 "set lz " do not redraw while running macros (much faster) (LazyRedraw)
@@ -306,10 +305,16 @@ let g:airline_symbols.branch = '⎇'
 "  let g:airline_symbols.paste = '∥'
 "let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_theme='solarized'
-"highlight CursorLine  term=underline  guibg=#1c1c1c  cterm=underline
-"highlight CursorColumn  term=underline  guibg=#1c1c1c  cterm=underline
 "set background=dark
 "let g:airline_theme='powerlineish'
 let g:airline#extensions#whitespace#trailing_format = 'WS:%s'
 let g:airline#extensions#whitespace#mixed_indent_format = 'MI:%s'
 let g:airline#extensions#whitespace#enabled = 0
+
+" sneak
+let g:sneak#streak = 1
+let g:sneak#use_ic_scs = 1
+vmap ' <Plug>SneakForward
+vmap " <Plug>SneakBackward
+nmap ' <Plug>SneakForward
+nmap " <Plug>SneakBackward
