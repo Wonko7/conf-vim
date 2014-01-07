@@ -1,17 +1,7 @@
-"##     runtime plugin/dragvisuals.vim                                  ##
-"##                                                                     ##
-"##     vmap  <expr>  <LEFT>   DVB_Drag('left')                         ##
-"##     vmap  <expr>  <RIGHT>  DVB_Drag('right')                        ##
-"##     vmap  <expr>  <DOWN>   DVB_Drag('down')                         ##
-"##     vmap  <expr>  <UP>     DVB_Drag('up')                           ##
-"##     vmap  <expr>  D        DVB_Duplicate()                          ##
-" When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
 endif
 
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
 set nocompatible
 
 " allow backspacing over everything in insert mode
@@ -22,7 +12,6 @@ set noswapfile
 set history=5000			" keep 50 lines of command line history
 set ruler				" show the cursor position all the time
 set showcmd				" display incomplete commands
-set incsearch				" do incremental searching
 
 
 if &t_Co > 2 || has("gui_running")
@@ -32,18 +21,9 @@ endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
   filetype plugin indent on
-
-  " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  "autocmd FileType text setlocal textwidth=78
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -58,9 +38,6 @@ else
   set autoindent			" always set autoindenting on
 endif " has("autocmd")
 
-" if exists('&macatsui')
-"   set nomacatsui
-" endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General config
@@ -84,9 +61,6 @@ set wildmode=longest,list
 set viminfo='1000,f1,:500,/500,<50,s10,h
 " set nomodeline
 "set listchars+=trail:_,tab:I. " FIXME; for now, remove tab display
-"au filetype lisp,clojure,clj
-"au BufNewFile,BufRead *.clj set listchars-=tab:I.
-"FIXME check
 
 set nowrap
 set wildignore=*.o,*.obj,*.bak,*.exe,*~
@@ -95,17 +69,11 @@ set hid " you can change buffer without saving
 set number
 set fileencoding=utf8
 set encoding=utf8
-"source $VIMRUNTIME/macros/matchit.vim
 
 filetype indent on
-"set foldmethod=indent " check this 660
-
-" formating
-"set formatoptions+=tcroq2
-"autocmd FileType mail, human set formatoptions+=t textwidth=72
-"setlocal spell spelllang=en_gb
 
 " SEARCH
+set incsearch				" do incremental searching
 set ignorecase
 set smartcase
 set nowrapscan
@@ -114,22 +82,14 @@ set nowrapscan
 " Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" highlight col79 ctermbg=Red guibg=Red
-" syntax match col79 /\%<80v.\%>80v/
-" syntax match col79 /\%<81v.\%>80v/
-
 syntax keyword Comment SAFE_CALL
 syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 
-" CLOJURE
-"
-" rainbow paren
-" au VimEnter * call rainbow_parenthsis#Activate()
-" au Syntax * call rainbow_parenthsis#LoadRound()
-" au Syntax * call rainbow_parenthsis#LoadSquare()
-" au Syntax * call rainbow_parenthsis#LoadBraces()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" lang depended
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" let g:slimv_lisp = "~/local/bin/clj"
+" CLOJURE
 
 "	PAREDIT
 let g:paredit_electric_return = 0
@@ -137,14 +97,9 @@ let g:paredit_shortmaps = 1
 map \( :call PareditToggle()<RETURN>
 let g:paredit_leader = "\\"
 
-"	 vimclojure
-
 " cljs
 au BufNewFile,BufRead *.cljs set filetype=clojure
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Binary
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " vim -b : edit binary using xxd-format!
 augroup Binary
@@ -160,7 +115,7 @@ augroup END
 au BufNewFile,BufRead *todo,*TODO		set ft=wtodo
 
 
-" lang dep:
+" perl
 
 let perl_include_POD=1
 let perl_extended_vars=1
@@ -170,13 +125,16 @@ let highlight_balanced_quotes = 1
 let highlight_function_name = 1
 
 "python:
+
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 "autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
 autocmd BufRead *.tex set makeprg=texi2pdf\ '%'
 autocmd BufRead *.tex set autoindent
 
+" completion
 set omnifunc=syntaxcomplete#Complete
+
 " omnicompletion for cpp
 " set nocp
 " filetype plugin on
@@ -259,7 +217,6 @@ omap <silent> ie <Plug>CamelCaseMotion_ie
 xmap <silent> ie <Plug>CamelCaseMotion_ie
 
 
-
 " cursor sniper
 set updatetime=2000
 
@@ -277,10 +234,9 @@ au! CursorMoved * call MySetCursor()
 au! CursorMovedI * call MyUnSetCursor()
 
 " completion
-let g:ycm_min_num_of_chars_for_completion = 1
 let g:SuperTabDefaultCompletionType = "context"
 
-"let g:EasyMotion_leader_key = '<Space><Space>'
+" hl for git gutter
 highlight clear SignColumn
 
 " status:
