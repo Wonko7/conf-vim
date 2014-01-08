@@ -91,11 +91,47 @@ syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 
 " CLOJURE
 
-"	PAREDIT
-let g:paredit_electric_return = 0
-let g:paredit_shortmaps = 1
-map \( :call PareditToggle()<RETURN>
-let g:paredit_leader = "\\"
+" S-EXP
+
+let mapleader = ''
+let maplocalleader = ''
+
+let g:sexp_insert_after_wrap = 0
+" most are unchanged, but keep this for reference
+let g:sexp_mappings = {
+			\ 'sexp_move_to_prev_top_element':  '[[',
+			\ 'sexp_move_to_next_top_element':  ']]',
+			\ 'sexp_select_prev_element':       '[e',
+			\ 'sexp_select_next_element':       ']e',
+			\ 'sexp_indent':                    '==',
+			\ 'sexp_indent_top':                '=-',
+			\ 'sexp_round_head_wrap_list':      '<LocalLeader>i',
+			\ 'sexp_round_tail_wrap_list':      '<LocalLeader>a',
+			\ 'sexp_square_head_wrap_list':     '<LocalLeader>l[',
+			\ 'sexp_square_tail_wrap_list':     '<LocalLeader>l]',
+			\ 'sexp_curly_head_wrap_list':      '<LocalLeader>l{',
+			\ 'sexp_curly_tail_wrap_list':      '<LocalLeader>l}',
+			\ 'sexp_round_head_wrap_element':   '<LocalLeader>w',
+			\ 'sexp_round_tail_wrap_element':   '<LocalLeader>W',
+			\ 'sexp_square_head_wrap_element':  '<LocalLeader>[',
+			\ 'sexp_square_tail_wrap_element':  '<LocalLeader>]',
+			\ 'sexp_curly_head_wrap_element':   '<LocalLeader>{',
+			\ 'sexp_curly_tail_wrap_element':   '<LocalLeader>}',
+			\ 'sexp_insert_at_list_head':       '<LocalLeader>h',
+			\ 'sexp_insert_at_list_tail':       '<LocalLeader>l',
+			\ 'sexp_splice_list':               '<LocalLeader>s',
+			\ 'sexp_raise_list':                '<LocalLeader>r',
+			\ 'sexp_raise_element':             '<LocalLeader>R',
+			\ 'sexp_swap_list_backward':        '<LocalLeader><',
+			\ 'sexp_swap_list_forward':         '<LocalLeader>>',
+			\ 'sexp_swap_element_backward':     '<',
+			\ 'sexp_swap_element_forward':      '>',
+			\ 'sexp_emit_head_element':         '<LocalLeader>J',
+			\ 'sexp_emit_tail_element':         '<LocalLeader>K',
+			\ 'sexp_capture_prev_element':      '<LocalLeader>j',
+			\ 'sexp_capture_next_element':      '<LocalLeader>k',
+			\ }
+
 
 " cljs
 au BufNewFile,BufRead *.cljs set filetype=clojure
