@@ -96,7 +96,7 @@ syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 let mapleader = ''
 let maplocalleader = ''
 
-let g:sexp_insert_after_wrap = 0
+let g:sexp_insert_after_wrap = 1
 " most are unchanged, but keep this for reference
 let g:sexp_mappings = {
 			\ 'sexp_move_to_prev_top_element':  '[[',
@@ -105,20 +105,20 @@ let g:sexp_mappings = {
 			\ 'sexp_select_next_element':       ']e',
 			\ 'sexp_indent':                    '==',
 			\ 'sexp_indent_top':                '=-',
-			\ 'sexp_round_head_wrap_list':      '<LocalLeader>i',
-			\ 'sexp_round_tail_wrap_list':      '<LocalLeader>a',
-			\ 'sexp_square_head_wrap_list':     '<LocalLeader>l[',
-			\ 'sexp_square_tail_wrap_list':     '<LocalLeader>l]',
-			\ 'sexp_curly_head_wrap_list':      '<LocalLeader>l{',
-			\ 'sexp_curly_tail_wrap_list':      '<LocalLeader>l}',
-			\ 'sexp_round_head_wrap_element':   '<LocalLeader>w',
-			\ 'sexp_round_tail_wrap_element':   '<LocalLeader>W',
+			\ 'sexp_round_head_wrap_list':      '<LocalLeader>I',
+			\ 'sexp_round_tail_wrap_list':      '<LocalLeader>A',
+			\ 'sexp_round_head_wrap_element':   '<LocalLeader>i',
+			\ 'sexp_round_tail_wrap_element':   '<LocalLeader>a',
+			\ 'sexp_insert_at_list_head':       '<LocalLeader>gi',
+			\ 'sexp_insert_at_list_tail':       '<LocalLeader>ga',
+			\ 'sexp_square_head_wrap_list':     '<LocalLeader>#[',
+			\ 'sexp_square_tail_wrap_list':     '<LocalLeader>#]',
+			\ 'sexp_curly_head_wrap_list':      '<LocalLeader>#{',
+			\ 'sexp_curly_tail_wrap_list':      '<LocalLeader>#}',
 			\ 'sexp_square_head_wrap_element':  '<LocalLeader>[',
 			\ 'sexp_square_tail_wrap_element':  '<LocalLeader>]',
 			\ 'sexp_curly_head_wrap_element':   '<LocalLeader>{',
 			\ 'sexp_curly_tail_wrap_element':   '<LocalLeader>}',
-			\ 'sexp_insert_at_list_head':       '<LocalLeader>h',
-			\ 'sexp_insert_at_list_tail':       '<LocalLeader>l',
 			\ 'sexp_splice_list':               '<LocalLeader>s',
 			\ 'sexp_raise_list':                '<LocalLeader>r',
 			\ 'sexp_raise_element':             '<LocalLeader>R',
@@ -126,10 +126,10 @@ let g:sexp_mappings = {
 			\ 'sexp_swap_list_forward':         '<LocalLeader>>',
 			\ 'sexp_swap_element_backward':     '<',
 			\ 'sexp_swap_element_forward':      '>',
-			\ 'sexp_emit_head_element':         '<LocalLeader>J',
-			\ 'sexp_emit_tail_element':         '<LocalLeader>K',
-			\ 'sexp_capture_prev_element':      '<LocalLeader>j',
-			\ 'sexp_capture_next_element':      '<LocalLeader>k',
+			\ 'sexp_emit_head_element':         '<LocalLeader>L',
+			\ 'sexp_emit_tail_element':         '<LocalLeader>H',
+			\ 'sexp_capture_prev_element':      '<LocalLeader>h',
+			\ 'sexp_capture_next_element':      '<LocalLeader>l',
 			\ }
 
 
@@ -306,7 +306,10 @@ let g:airline#extensions#whitespace#enabled = 0
 " sneak
 let g:sneak#streak = 1
 let g:sneak#use_ic_scs = 1
+set clipboard=unnamedplus
+noremap g" "
+vnoremap g" "
 vmap ' <Plug>SneakForward
-vmap " <Plug>SneakBackward
 nmap ' <Plug>SneakForward
+vmap " <Plug>SneakBackward
 nmap " <Plug>SneakBackward
