@@ -45,8 +45,16 @@ endif " has("autocmd")
 
 " pathogen
 "call pathogen#runtime_append_all_bundles()
-"clojure FIXME TODO tmp, I want this, but too buggy for now.
-let g:pathogen_disabled = ["vim-parinfer"]
+" check these out for bugs:
+"AnsiEsc.vim
+"argtextobj.vim
+"hiPairs
+"vim-diff-enhanced
+"vim-fetch
+"vim-gnupg
+"
+"
+"let g:pathogen_disabled = ["vim-parinfer"]
 
 "let g:parinfer_mode = "indent"
 call pathogen#infect()
