@@ -25,29 +25,30 @@ function! My_set_spell()
 endfunction
 
 function! My_set_style()
-		"set noexpandtab
-		"set softtabstop=4
-		"set tabstop=4
-		"set shiftwidth=4
-		"set smarttab
-		"set comments=sl:/*,mb:\ *,ex:\ */
-		"let g:DoxygenToolkit_interCommentTag = "* "
-		"let g:DoxygenToolkit_interCommentBlock = "* "
-		"let g:DoxygenToolkit_cinoptions = "c1C1"
-		"let g:my_set_style = 1
-		"echo "kernel-4 (indent=tab, len=4, tab_display=4)"
 	if g:my_set_style == 0
-		set expandtab
-		set softtabstop=3
-		set tabstop=8
-		set shiftwidth=3
+		set noexpandtab
+		set softtabstop=4
+		set tabstop=4
+		set shiftwidth=4
 		set smarttab
 		set comments=sl:/*,mb:\ *,ex:\ */
 		let g:DoxygenToolkit_interCommentTag = "* "
 		let g:DoxygenToolkit_interCommentBlock = "* "
 		let g:DoxygenToolkit_cinoptions = "c1C1"
-		echo "fred (indent=space, len=3, tab_display=8)"
-		let g:my_set_style = 1 
+		let g:my_set_style = 1
+		echo "kernel-4 (indent=tab, len=4, tab_display=4)"
+	"if g:my_set_style == 0
+	"	set expandtab
+	"	set softtabstop=3
+	"	set tabstop=8
+	"	set shiftwidth=3
+	"	set smarttab
+	"	set comments=sl:/*,mb:\ *,ex:\ */
+	"	let g:DoxygenToolkit_interCommentTag = "* "
+	"	let g:DoxygenToolkit_interCommentBlock = "* "
+	"	let g:DoxygenToolkit_cinoptions = "c1C1"
+	"	echo "fred (indent=space, len=3, tab_display=8)"
+	"	let g:my_set_style = 1 
 	elseif g:my_set_style == 1
 		set noexpandtab
 		set softtabstop=8

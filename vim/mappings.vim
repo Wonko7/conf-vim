@@ -32,7 +32,9 @@ map -d :%s/\v\s*$//<RETURN>``<ESC>:noh<RETURN>
 map -u yypVr=
 map -- <ESC>:noh<RETURN>
 imap jj <Esc>
-cmap w!! %!sudo tee > /dev/null %
+imap ,, <Esc>
+cmap w!! %!sudo tee > /dev/null %<RETURN>
+cmap ww %!sudo tee > /dev/null %<RETURN>
 cmap cwd lcd %:p:h
 cmap :S %s/\v
 vmap / y/<C-R>"<CR>
@@ -50,3 +52,10 @@ nmap <C-Space>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-Space>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-Space>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-Space>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+" c args: FIXME do this in c langs only
+map g> cxiavia<ESC>Wcxiavia<ESC>
+map <CR>> cxiavia<ESC>Wcxiavia<ESC>
+"W
+map g< cxiaviao<ESC>bbcxia
+map <CR>< cxiaviao<ESC>bbcxia

@@ -45,9 +45,24 @@ endif " has("autocmd")
 
 " pathogen
 "call pathogen#runtime_append_all_bundles()
+"clojure FIXME TODO tmp, I want this, but too buggy for now.
+let g:pathogen_disabled = ["vim-parinfer"]
+
+"let g:parinfer_mode = "indent"
 call pathogen#infect()
 call pathogen#helptags()
 
+"source /usr/share/vim/vimfiles/plugin/youcompleteme.vim
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '%%'
+let g:ycm_complete_in_comments = 1
+" set to 1 for clj
+let g:ycm_seed_identifiers_with_syntax = 0
+" this looks cool; let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<C-h>']
+let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-l>']
+" let g:ycm_key_detailed_diagnostics = '<leader>d' # see more about this diag stuff
+let g:ycm_confirm_extra_conf = 0
 
 let g:zenburn_force_dark_Background = 1
 let g:zenburn_high_Contrast = 1
@@ -90,6 +105,9 @@ syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " CLOJURE
+
+let g:clojure_maxlines = 1000
+let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
 
 " S-EXP
 
@@ -137,6 +155,26 @@ let g:sexp_mappings = {
 au BufNewFile,BufRead *.cljs set filetype=clojure
 
 
+let g:hiPairs_hl_matchPair = { 'term'    : 'underline,bold',
+			\                  'cterm'   : 'underline,bold',
+			\                  'ctermfg' : 'NONE',
+			\                  'ctermbg' : 'NONE',
+			\                  'gui'     : 'bold',
+			\                  'guifg'   : 'White',
+			\                  'guibg'   : 'NONE' }
+
+
+
+let g:hiPairs_hl_unmatchPair = { 'term'    : 'underline,italic',
+			\                    'cterm'   : 'italic',
+			\                    'ctermfg' : '15',
+			\                    'ctermbg' : '12',
+			\                    'gui'     : 'italic',
+			\                    'guifg'   : 'White',
+			\                    'guibg'   : 'Red' }
+
+
+
 " vim -b : edit binary using xxd-format!
 augroup Binary
   au!
@@ -149,6 +187,7 @@ augroup Binary
   au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
 augroup END
 au BufNewFile,BufRead *todo,*TODO		set ft=wtodo
+au BufNewFile,BufRead *.muttrc		set ft=muttrc
 
 
 " perl
@@ -176,10 +215,20 @@ set omnifunc=syntaxcomplete#Complete
 " filetype plugin on
 " let OmniCpp_ShowPrototypeInAbbr = 1
 " let OmniCpp_DefaultNamespaces = ["std"]
-" let OmniCpp_MayCompleteDot = 1
-" let OmniCpp_MayCompleteArrow = 1
-" let OmniCpp_MayCompleteScope = 1
+let OmniCpp_MayCompleteDot = 1
+let OmniCpp_MayCompleteArrow = 1
+let OmniCpp_MayCompleteScope = 1
+let OmniCpp_MayCompleteSlash = 1
 " let OmniCpp_SelectFirstItem = 2
+
+
+let g:ycm_path_to_python_interpreter = 'python2.7'
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+
+
+"""""""" scratch
+let g:scratch_insert_autohide = 0
 "
 " au BufWinEnter *.[ch] let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 
@@ -237,20 +286,21 @@ vmap  <expr>  D        DVB_Duplicate()
 " digraphs
 inoremap <expr>  <C-K>   BDG_GetDigraph()
 
+" FIXME:
 " replace w b e
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
-
-omap <silent> iw <Plug>CamelCaseMotion_iw
-xmap <silent> iw <Plug>CamelCaseMotion_iw
-omap <silent> ib <Plug>CamelCaseMotion_ib
-xmap <silent> ib <Plug>CamelCaseMotion_ib
-omap <silent> ie <Plug>CamelCaseMotion_ie
-xmap <silent> ie <Plug>CamelCaseMotion_ie
+" map <silent> w <Plug>CamelCaseMotion_w
+" map <silent> b <Plug>CamelCaseMotion_b
+" map <silent> e <Plug>CamelCaseMotion_e
+" sunmap w
+" sunmap b
+" sunmap e
+" 
+" omap <silent> iw <Plug>CamelCaseMotion_iw
+" xmap <silent> iw <Plug>CamelCaseMotion_iw
+" omap <silent> ib <Plug>CamelCaseMotion_ib
+" xmap <silent> ib <Plug>CamelCaseMotion_ib
+" omap <silent> ie <Plug>CamelCaseMotion_ie
+" xmap <silent> ie <Plug>CamelCaseMotion_ie
 
 
 " cursor sniper
@@ -304,12 +354,20 @@ let g:airline#extensions#whitespace#mixed_indent_format = 'MI:%s'
 let g:airline#extensions#whitespace#enabled = 0
 
 " sneak
-let g:sneak#streak = 1
+let g:sneak#streak = 0
 let g:sneak#use_ic_scs = 1
 set clipboard=unnamedplus
 noremap g" "
 vnoremap g" "
-vmap ' <Plug>SneakForward
+xmap ' <Plug>VSneakForward
 nmap ' <Plug>SneakForward
-vmap " <Plug>SneakBackward
+xmap " <Plug>VSneakBackward
 nmap " <Plug>SneakBackward
+
+" diff
+" started In Diff-Mode set diffexpr (plugin not loaded yet)
+if &diff
+    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+endif
+
+" FIXME; set cino+=(0 for c.
