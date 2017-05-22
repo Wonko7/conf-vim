@@ -3,6 +3,7 @@ if v:progname =~? "evim"
 endif
 
 set nocompatible
+set guiheadroom=0
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -12,6 +13,8 @@ set noswapfile
 set history=5000			" keep 50 lines of command line history
 set ruler				" show the cursor position all the time
 set showcmd				" display incomplete commands
+
+noremap <cr> <nop>
 
 
 if &t_Co > 2 || has("gui_running")
@@ -54,7 +57,8 @@ endif " has("autocmd")
 "vim-gnupg
 "
 "
-"let g:pathogen_disabled = ["vim-parinfer"]
+set lispwords+="go-loop"
+let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs"]
 
 "let g:parinfer_mode = "indent"
 call pathogen#infect()
@@ -108,6 +112,7 @@ set nowrapscan
 syntax keyword Comment SAFE_CALL
 syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lang depended
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -117,10 +122,14 @@ syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 let g:clojure_maxlines = 1000
 let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
 
+" lispwords let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
+
 " S-EXP
 
-let mapleader = ''
-let maplocalleader = ''
+"let mapleader = ''
+"let maplocalleader = ''
+let mapleader="\<cr>"
+let maplocalleader = "\<cr>"
 
 let g:sexp_insert_after_wrap = 1
 " most are unchanged, but keep this for reference
@@ -157,6 +166,7 @@ let g:sexp_mappings = {
 			\ 'sexp_capture_prev_element':      '<LocalLeader>h',
 			\ 'sexp_capture_next_element':      '<LocalLeader>l',
 			\ }
+
 
 
 " cljs
@@ -217,22 +227,24 @@ autocmd BufRead *.tex set autoindent
 
 " completion
 set omnifunc=syntaxcomplete#Complete
-
-" omnicompletion for cpp
-" set nocp
-" filetype plugin on
-" let OmniCpp_ShowPrototypeInAbbr = 1
-" let OmniCpp_DefaultNamespaces = ["std"]
-let OmniCpp_MayCompleteDot = 1
-let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1
-let OmniCpp_MayCompleteSlash = 1
+""
+""" omnicompletion for cpp
+""" set nocp
+""" filetype plugin on
+""" let OmniCpp_ShowPrototypeInAbbr = 1
+""" let OmniCpp_DefaultNamespaces = ["std"]
+""let OmniCpp_MayCompleteDot = 1
+""let OmniCpp_MayCompleteArrow = 1
+""let OmniCpp_MayCompleteScope = 1
+""let OmniCpp_MayCompleteSlash = 1
 " let OmniCpp_SelectFirstItem = 2
 
 
 let g:ycm_path_to_python_interpreter = 'python2.7'
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
 
 
 """""""" scratch
@@ -364,7 +376,15 @@ let g:airline#extensions#whitespace#enabled = 0
 " sneak
 let g:sneak#streak = 0
 let g:sneak#use_ic_scs = 1
-set clipboard=unnamedplus
+" set clipboard=unnamedplus " this was a mistake.
+let g:ctrlp_map = ''
+
+vnoremap <C-p> "*p
+vnoremap <C-y> "*y
+noremap <C-p> "*p
+nnoremap <C-y> "*y
+"inoremap <C-p> <Esc>"*pa " interferes with completion
+
 noremap g" "
 vnoremap g" "
 xmap ' <Plug>VSneakForward
@@ -377,5 +397,9 @@ nmap " <Plug>SneakBackward
 if &diff
     let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
 endif
+
+" rainbow:
+let g:poppyhigh = ["identifier", "keyword", "character", "conditional", "comment"]
+au! cursormoved * call PoppyInit()
 
 " FIXME; set cino+=(0 for c.
