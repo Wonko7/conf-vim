@@ -17,10 +17,10 @@
 
 
 " Opening and closing parenthesis
-autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> (<tab> ()<ESC>i
-autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> [<tab> []<ESC>i
-autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> "<tab> ""<ESC>i
-autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> '<tab> ''<ESC>i
-autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> <<tab> <><ESC>i
-autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> <\<tab> <><ESC>i
-autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> {<tab> {}<ESC>i
+"autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> (<tab> ()<ESC>i
+"autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> [<tab> []<ESC>i
+"autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> "<tab> ""<ESC>i
+"autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> '<tab> ''<ESC>i
+"autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> <<tab> <><ESC>i
+"autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> <\<tab> <><ESC>i
+"autocmd FileType php,perl,javascript,java,cpp,c imap <buffer> {<tab> {}<ESC>i

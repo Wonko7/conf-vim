@@ -1,5 +1,5 @@
 let g:my_set_spell = 0
-let g:my_set_style = -1
+let g:my_set_style = 3
 
 function! My_set_spell()
 	if g:my_set_spell == 0
@@ -28,7 +28,7 @@ function! My_set_style()
 	if g:my_set_style == 0
 		set noexpandtab
 		set softtabstop=4
-		set tabstop=4
+		set tabstop=8
 		set shiftwidth=4
 		set smarttab
 		set comments=sl:/*,mb:\ *,ex:\ */
@@ -76,11 +76,11 @@ function! My_set_style()
 		endif
 		let g:my_set_style = 3 
 	else
-		set noexpandtab
+		set expandtab
 		set softtabstop=8
 		set tabstop=8
 		set shiftwidth=2
-		set smarttab
+		set nosmarttab
 		set comments=sl:/*,mb:**,ex:*/
 		let g:DoxygenToolkit_interCommentTag = "** "
 		let g:DoxygenToolkit_interCommentBlock = "** "

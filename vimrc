@@ -58,7 +58,7 @@ endif " has("autocmd")
 "
 "
 set lispwords+="go-loop"
-let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs"]
+let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs", "syntastic"]
 
 "let g:parinfer_mode = "indent"
 call pathogen#infect()
@@ -196,11 +196,11 @@ let g:hiPairs_hl_unmatchPair = { 'term'    : 'underline,italic',
 " vim -b : edit binary using xxd-format!
 augroup Binary
   au!
-  au BufReadPre  *.o,out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
-  au BufReadPost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
-  au BufReadPost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
-  au BufWritePre *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
-  au BufWritePre *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
+  au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
+  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
+  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
+  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
   au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
   au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
 augroup END
@@ -225,8 +225,30 @@ autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stde
 autocmd BufRead *.tex set makeprg=texi2pdf\ '%'
 autocmd BufRead *.tex set autoindent
 
+
+" javascript
+let g:jsdoc_allow_input_prompt = 1
+let g:jsdoc_enable_es6 = 1
+nmap <silent> <Space>c ?function<cr>:noh<cr><Plug>(jsdoc)
+nmap <silent> <Space>C <Plug>(jsdoc)
+nmap <silent> <Space>d :YcmCompleter GetDoc<CR>
+nmap <silent> <Space>g :YcmCompleter GoTo<CR>
+nmap <silent> <Space>a :s/\vfunction\s+([0-9a-zA-Z_]+)\s*(\(.*\))\s*\{/const \1 = \2 => {/<CR>--
+nmap <silent> <Space>A :s/\vconst\s+([0-9a-zA-Z_]+)\s*\=\s*(\(.*\))\s*\=\>\s*\{/function \1\2 {/<CR>--
+set indentkeys+=',.,?,<:>,&,|'
+
+let g:javascript_plugin_jsdoc = 1
+let g:AutoPairsFlyMode = 1
+"let g:AutoPairsShortcutFastWrap='<C-i>' " fixme useless, i mode only
+let g:AutoPairsShortcutJump='<C-n>'
+"map <C-a> :call AutoPairsMoveCharacter('<')<CR>
+"set cino=' h'
+"set cino=j1,J1
+" au Bufenter *.php set comments=sl:/*,mb:*,elx:*/
+
 " completion
 set omnifunc=syntaxcomplete#Complete
+
 ""
 """ omnicompletion for cpp
 """ set nocp
@@ -238,6 +260,9 @@ set omnifunc=syntaxcomplete#Complete
 ""let OmniCpp_MayCompleteScope = 1
 ""let OmniCpp_MayCompleteSlash = 1
 " let OmniCpp_SelectFirstItem = 2
+"au! CursorMoved <buffer> call YcmCompleter('GetDoc')
+set previewheight=7
+"au! cursormoved *js :echo "lol"
 
 
 let g:ycm_path_to_python_interpreter = 'python2.7'
@@ -245,12 +270,33 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_semantic_triggers = { 'clojure': ['('], 'javascript': ['.'] }
 
 
 """""""" scratch
 let g:scratch_insert_autohide = 0
 "
 " au BufWinEnter *.[ch] let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+" 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" syntastic checker
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers=['eslint']
+let g:airline#extensions#syntastic#enabled = 0
+"let g:syntastic_javascript_eslint_exe=['~/local/node-local/node_modules/eslint/bin/eslint.js']
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sub conf
@@ -308,19 +354,19 @@ inoremap <expr>  <C-K>   BDG_GetDigraph()
 
 " FIXME:
 " replace w b e
-" map <silent> w <Plug>CamelCaseMotion_w
-" map <silent> b <Plug>CamelCaseMotion_b
-" map <silent> e <Plug>CamelCaseMotion_e
-" sunmap w
-" sunmap b
-" sunmap e
-" 
-" omap <silent> iw <Plug>CamelCaseMotion_iw
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
-" omap <silent> ib <Plug>CamelCaseMotion_ib
-" xmap <silent> ib <Plug>CamelCaseMotion_ib
-" omap <silent> ie <Plug>CamelCaseMotion_ie
-" xmap <silent> ie <Plug>CamelCaseMotion_ie
+map <silent>w <Plug>CamelCaseMotion_w
+map <silent>b <Plug>CamelCaseMotion_b
+map <silent>e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+
+omap <silent>iw <Plug>CamelCaseMotion_iw
+xmap <silent>iw <Plug>CamelCaseMotion_iw
+omap <silent>ib <Plug>CamelCaseMotion_ib
+xmap <silent>ib <Plug>CamelCaseMotion_ib
+omap <silent>ie <Plug>CamelCaseMotion_ie
+xmap <silent>ie <Plug>CamelCaseMotion_ie
 
 
 " cursor sniper
