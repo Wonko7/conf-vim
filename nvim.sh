@@ -1,10 +1,12 @@
 #!/bin/sh
 
-## this binds a single vim per desktop. Any terminal on that desktop will send files to it.
+## this binds a single nvim per desktop. Any terminal on that desktop will send files to it.
 ## vim is run in a tmux session which will be re-attached if the terminal is closed.
 
 VIM_SERVER=nvim_`wmctrl -d | sed -nre "/\*/ s/^([0-9]+).*/\1/p"`
-nvr="/home/wjc/local/bin/nvr -s --servername $VIM_SERVER $@"
+nvr="~/local/bin/nvr -s --servername /tmp/nvimsockets/$VIM_SERVER $@"
+
+mkdir -p /tmp/nvimsockets/
 
 if nvr --serverlist | egrep -q "^$VIM_SERVER\$"; then
 	# send file open to existing session:
@@ -21,5 +23,6 @@ if nvr --serverlist | egrep -q "^$VIM_SERVER\$"; then
 	fi
 else
 	# new session:
+	echo st -t $VIM_SERVER -e tmux new-session -s auto_$VIM_SERVER "$nvr" 
 	(st -t $VIM_SERVER -e tmux new-session -s auto_$VIM_SERVER "$nvr" \; set status off \; )&
 fi
