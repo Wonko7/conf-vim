@@ -15,7 +15,7 @@ aug coding
   au BufNewFile	  index.{html,php}  call HeaderWWWNew()
 aug END
 
-function Replace(cs, cm, ce)
+function! Replace(cs, cm, ce)
   execute "% s,@CS@," . a:cs . ",ge"
   execute "% s,@CM@," . a:cm . ",ge"
   execute "% s,@CE@," . a:ce . ",ge"
@@ -31,7 +31,7 @@ function Replace(cs, cm, ce)
 endfun
 "execute Get_git_parent() 
 
-function HeaderCNew()
+function! HeaderCNew()
   let header = confirm("Add header?", "&None\n&Epita\n&Default")
   if header == 2
     0r ~/.vim/skel/epita.tpl
@@ -46,7 +46,7 @@ function HeaderCNew()
   endif
 endfun
 
-function HeaderHNew()
+function! HeaderHNew()
   let header = confirm("Add header?", "&None\n&Epita\n&Default")
   if header == 2
     0r ~/.vim/skel/epita.tpl
@@ -61,7 +61,7 @@ function HeaderHNew()
   endif
 endfun
 
-function HeaderWWWNew()
+function! HeaderWWWNew()
   let header = confirm("Use default structure?", "&Yes\n&No")
   if header == 1
     0r ~/.vim/skel/index.tpl
@@ -70,7 +70,7 @@ function HeaderWWWNew()
   endif
 endfun
 
-function HeaderUpdate()
+function! HeaderUpdate()
   let linenb = line(".")
   let n = search('Last update')
   if (n > 0) && (n< 10)
@@ -79,7 +79,7 @@ function HeaderUpdate()
   execute ":" . linenb
 endfun
 
-function MakefileNew()
+function! MakefileNew()
   let makefile = confirm("Use default makefile?", "&None\n&C\n&C++\n&LaTeX")
   if makefile == 2
     0r ~/.vim/skel/Makefile_c.tpl

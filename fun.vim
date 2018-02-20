@@ -77,14 +77,11 @@ function! My_set_style()
 		let g:my_set_style = 3 
 	else
 		set expandtab
-		set softtabstop=8
+		set softtabstop=2
 		set tabstop=8
 		set shiftwidth=2
 		set nosmarttab
 		set comments=sl:/*,mb:**,ex:*/
-		let g:DoxygenToolkit_interCommentTag = "** "
-		let g:DoxygenToolkit_interCommentBlock = "** "
-		let g:DoxygenToolkit_cinoptions = "c0C1"
 		let g:my_set_style = 0
 		echo "normal-2 (indent=space, len=2, tab_display=8)"
 	endif

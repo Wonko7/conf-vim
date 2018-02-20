@@ -3,8 +3,7 @@ if v:progname =~? "evim"
 endif
 
 set nocompatible
-set guiheadroom=0
-
+"set guiheadroom=0  <-- neovim does not like
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
@@ -20,7 +19,12 @@ noremap <cr> <nop>
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
+  autocmd GUIEnter * set vb t_vb=
+  set noerrorbells
 endif
+set vb t_vb=
+set noerrorbells
+
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -54,16 +58,20 @@ endif " has("autocmd")
 "hiPairs
 "vim-diff-enhanced
 "vim-fetch
-"vim-gnupg
 "
+
+set runtimepath+=",~/conf/vim/"
 "
 set lispwords+="go-loop"
-let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs", "syntastic"]
+let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs", "syntastic" ]
+
+"  "poppy", "auto-pairs"]
 
 "let g:parinfer_mode = "indent"
 call pathogen#infect()
 call pathogen#helptags()
 
+let g:gitgutter_max_signs = 2000
 "source /usr/share/vim/vimfiles/plugin/youcompleteme.vim
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '%%'
@@ -397,13 +405,9 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 
 "  " unicode symbols
-"  let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-"  let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
 "  let g:airline_symbols.linenr = '␊'
 "  let g:airline_symbols.linenr = '␤'
 "  let g:airline_symbols.linenr = '¶'
@@ -412,7 +416,7 @@ let g:airline_symbols.branch = '⎇'
 "  let g:airline_symbols.paste = 'Þ'
 "  let g:airline_symbols.paste = '∥'
 "let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_theme='solarized'
+"let g:airline_theme='solarized'
 "set background=dark
 "let g:airline_theme='powerlineish'
 let g:airline#extensions#whitespace#trailing_format = 'WS:%s'
@@ -447,5 +451,6 @@ endif
 " rainbow:
 let g:poppyhigh = ["identifier", "keyword", "character", "conditional", "comment"]
 au! cursormoved * call PoppyInit()
+let g:poppy_point_enable = 1
 
 " FIXME; set cino+=(0 for c.

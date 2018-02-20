@@ -9,9 +9,14 @@ set columns=163
 set gcr=a:blinkon0
 "colorscheme late
 
+set vb t_vb=
+set noerrorbells
+
 
 "set gfn=Terminus\ 10
-set gfn=Droid\ Sans\ Mono\ Slashed\ for\ Powerline\ 15
+"set gfn=Droid\ Sans\ Mono\ Slashed\ for\ Powerline\ 15
+"set gfn=DejaVu\ Sans\ Mono\ for\ Powerline\ 15
+set gfn=Fira\ Code\ 15
 "set gfn=Droid\ Sans\ Mono\ 13
 "set gfn=Droid\ Sans\ Mono\ 8
 "set gfn=Inconsolata\ 12
