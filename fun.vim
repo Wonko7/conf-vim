@@ -1,5 +1,5 @@
 let g:my_set_spell = 0
-let g:my_set_style = 3
+let g:my_set_style = 1
 
 function! My_set_spell()
 	if g:my_set_spell == 0

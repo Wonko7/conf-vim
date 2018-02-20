@@ -317,7 +317,7 @@ source ~/.vim/fun.vim
 source ~/.vim/cabbrev.vim
 
 " indentation
-call My_set_style()
+silent call My_set_style()
 
 " plugins
 source $VIMRUNTIME/macros/matchit.vim " extends %
