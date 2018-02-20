@@ -59,6 +59,7 @@ endif " has("autocmd")
 "vim-diff-enhanced
 "vim-fetch
 "
+set showtabline=0
 
 set runtimepath+=",~/conf/vim/"
 "
@@ -73,6 +74,7 @@ call pathogen#helptags()
 
 let g:gitgutter_max_signs = 2000
 "source /usr/share/vim/vimfiles/plugin/youcompleteme.vim
+let g:ycm_server_python_interpreter = '/usr/bin/python3.6'
 let g:ycm_error_symbol = '>>'
 let g:ycm_warning_symbol = '%%'
 let g:ycm_complete_in_comments = 1
