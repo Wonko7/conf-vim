@@ -64,13 +64,36 @@ set showtabline=0
 set runtimepath+=",~/conf/vim/"
 "
 set lispwords+="go-loop"
-let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs", "syntastic" ]
-
+let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs", "syntastic", "YouCompleteMe"]
 "  "poppy", "auto-pairs"]
 
 "let g:parinfer_mode = "indent"
 call pathogen#infect()
 call pathogen#helptags()
+
+let g:deoplete#enable_at_startup = 1
+"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" omnifuncs
+" augroup omnifuncs
+"   autocmd!
+"   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"   "autocmd FileType c,cpp setlocal omnifunc=xmlcomplete#CompleteTags
+" augroup end
+
+"set completeopt+=noinsert,noselect
+"set completeopt-=preview
+
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+"autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 let g:gitgutter_max_signs = 2000
 "source /usr/share/vim/vimfiles/plugin/youcompleteme.vim
@@ -85,6 +108,14 @@ let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<C-h>']
 let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-l>']
 " let g:ycm_key_detailed_diagnostics = '<leader>d' # see more about this diag stuff
 let g:ycm_confirm_extra_conf = 0
+"" "
+let g:ycm_path_to_python_interpreter = 'python2.7'
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_semantic_triggers = { 'clojure': ['('], 'javascript': ['.'] }
 
 let g:zenburn_force_dark_Background = 1
 let g:zenburn_high_Contrast = 1
@@ -257,7 +288,7 @@ let g:AutoPairsShortcutJump='<C-n>'
 " au Bufenter *.php set comments=sl:/*,mb:*,elx:*/
 
 " completion
-set omnifunc=syntaxcomplete#Complete
+"set omnifunc=syntaxcomplete#Complete
 
 ""
 """ omnicompletion for cpp
@@ -275,14 +306,6 @@ set previewheight=7
 "au! cursormoved *js :echo "lol"
 
 
-let g:ycm_path_to_python_interpreter = 'python2.7'
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-"let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_semantic_triggers = { 'clojure': ['('], 'javascript': ['.'] }
-
 
 """""""" scratch
 let g:scratch_insert_autohide = 0
@@ -299,13 +322,20 @@ let g:scratch_insert_autohide = 0
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers=['eslint']
-let g:airline#extensions#syntastic#enabled = 0
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_javascript_checkers=['eslint']
+" let g:airline#extensions#syntastic#enabled = 0
 "let g:syntastic_javascript_eslint_exe=['~/local/node-local/node_modules/eslint/bin/eslint.js']
+
+" Disable other C linters, too slow:
+let g:ale_linters = {
+\   'c': ['clang'],
+\}
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -349,7 +379,7 @@ let g:login	= "William Caldwell"
 let g:email	= "William@undefined.re"
 let g:login_aka	= ""
 
-" drag bloc
+" drag bloc FIXME: useless.
 runtime plugin/dragvisuals.vim
 
 vmap  <expr>  <LEFT>   DVB_Drag('left')
@@ -385,6 +415,8 @@ set updatetime=2000
 function! MySetCursor()
 	set cursorline
 	set cursorcolumn
+	" ugly:
+	call PoppyInit()
 endfunction
 function! MyUnSetCursor()
 	set nocursorline
@@ -396,7 +428,7 @@ au! CursorMoved * call MySetCursor()
 au! CursorMovedI * call MyUnSetCursor()
 
 " completion
-let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabDefaultCompletionType = "context"
 
 " hl for git gutter
 highlight clear SignColumn
@@ -408,6 +440,10 @@ if !exists('g:airline_symbols')
 endif
 
 let g:airline_powerline_fonts = 1
+
+"let g:airline_left_sep = '▶'
+"let g:airline_left_sep = '◣'
+"let g:airline_right_sep = '◀'
 
 "  " unicode symbols
 "  let g:airline_symbols.linenr = '␊'
@@ -451,8 +487,8 @@ if &diff
 endif
 
 " rainbow:
+"au! cursormoved * call PoppyInit() <-- done higher up
 let g:poppyhigh = ["identifier", "keyword", "character", "conditional", "comment"]
-au! cursormoved * call PoppyInit()
 let g:poppy_point_enable = 1
 
 " FIXME; set cino+=(0 for c.
