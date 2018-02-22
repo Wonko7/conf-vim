@@ -177,9 +177,9 @@ endif
 " 			\                  'gui'     : 'bold',
 " 			\                  'guifg'   : 'White',
 " 			\                  'guibg'   : 'NONE' }
-" 
-" 
-" 
+"
+"
+"
 " let g:hiPairs_hl_unmatchPair = { 'term'    : 'underline,italic',
 " 			\                    'cterm'   : 'italic',
 " 			\                    'ctermfg' : '15',
@@ -187,7 +187,7 @@ endif
 " 			\                    'gui'     : 'italic',
 " 			\                    'guifg'   : 'White',
 " 			\                    'guibg'   : 'Red' }
-" 
+"
 
 let g:gitgutter_max_signs = 2000
 " hl for git gutter
@@ -409,10 +409,8 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 source ~/.vim/mappings.vim
-source ~/.vim/abbrev.vim
 source ~/.vim/headers.vim
 source ~/.vim/fun.vim
-source ~/.vim/cabbrev.vim
 
 " init indentation:
 silent call My_set_style()

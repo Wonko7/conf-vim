@@ -21,7 +21,7 @@ function! Replace(cs, cm, ce)
   execute "% s,@CE@," . a:ce . ",ge"
   execute "% s,@DATE-STAMP@," . strftime("%c") . ",ge"
   execute "% s,@FILE-NAME@," . expand('%:t') . ",ge"
-  execute "% s,@FILE-HEADER@," . substitute(substitute(expand('%:t'), "\\.c", "\\.h", "g"), "\\.hc", "\\.hh", "g") . ",ge" 
+  execute "% s,@FILE-HEADER@," . substitute(substitute(expand('%:t'), "\\.c", "\\.h", "g"), "\\.hc", "\\.hh", "g") . ",ge"
   execute "% s,@LARGE-FILE-NAME@," . substitute(toupper(expand('%:t')), "\\.", "_", "g") . ",ge"
   execute "% s,@PART@," . expand("%:p:h:t") . ",ge"
   execute "% s,@PROJECT@," . expand("%:p:h:t") . ",ge"
@@ -29,7 +29,7 @@ function! Replace(cs, cm, ce)
   execute "% s,@EMAIL@," . g:email . ",ge"
   execute "% s,@AKA@," . g:login_aka . ",ge"
 endfun
-"execute Get_git_parent() 
+"execute Get_git_parent()
 
 function! HeaderCNew()
   let header = confirm("Add header?", "&None\n&Epita\n&Default")
@@ -89,4 +89,3 @@ function! MakefileNew()
     0r ~/.vim/skel/Makefile_ltx.tpl
   endif
 endfun
-

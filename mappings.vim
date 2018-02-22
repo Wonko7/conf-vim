@@ -53,7 +53,7 @@ nmap <C-Space>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-Space>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-Space>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
-" c args: FIXME do this in c langs only
+" c args: FIXME do this in c langs only?
 map g> cxiavia<ESC>Wcxiavia<ESC>
 map <CR>> cxiavia<ESC>Wcxiavia<ESC>
 "W
