@@ -59,3 +59,9 @@ map <CR>> cxiavia<ESC>Wcxiavia<ESC>
 "W
 map g< cxiaviao<ESC>bbcxia
 map <CR>< cxiaviao<ESC>bbcxia
+
+" copy/paste to *
+vnoremap <C-p> "*p
+vnoremap <C-y> "*y
+noremap <C-p> "*p
+nnoremap <C-y> "*y
