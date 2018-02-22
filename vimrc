@@ -262,6 +262,24 @@ xmap " <Plug>VSneakBackward
 nmap " <Plug>SneakBackward
 
 
+""""""""""" Cscope:
+
+if has("cscope")
+	set csprg=/usr/bin/cscope
+	set csto=0
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+	    cs add cscope.out
+	" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+	    cs add $CSCOPE_DB
+	endif
+	set csverb
+endif
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -323,8 +341,7 @@ let g:sexp_mappings = {
 			\ 'sexp_capture_next_element':      '<LocalLeader>l',
 			\ }
 
-""""""""""" cljs
-
+" cljs
 au BufNewFile,BufRead *.cljs set filetype=clojure
 set lispwords+="go-loop"
 
@@ -337,6 +354,7 @@ let perl_extended_vars=1
 let bash_is_sh=1
 let highlight_balanced_quotes = 1
 let highlight_function_name = 1
+
 
 """"""""""" python:
 
@@ -359,7 +377,6 @@ nmap <silent> <Space>a :s/\vfunction\s+([0-9a-zA-Z_]+)\s*(\(.*\))\s*\{/const \1 
 nmap <silent> <Space>A :s/\vconst\s+([0-9a-zA-Z_]+)\s*\=\s*(\(.*\))\s*\=\>\s*\{/function \1\2 {/<CR>--
 set indentkeys+=',.,?,<:>,&,|'
 let g:javascript_plugin_jsdoc = 1
-
 
 
 """"""""""" HEX/Binary: vim -b : edit binary using xxd-format!
@@ -387,24 +404,6 @@ endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" lint
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-
-" let g:syntastic_always_populate_loc_list = 0
-" let g:syntastic_auto_loc_list = 0
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_javascript_checkers=['eslint']
-" let g:airline#extensions#syntastic#enabled = 0
-"let g:syntastic_javascript_eslint_exe=['~/local/node-local/node_modules/eslint/bin/eslint.js']
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sub conf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -414,23 +413,6 @@ source ~/.vim/fun.vim
 
 " init indentation:
 silent call My_set_style()
-
-""""""""""" Cscope:
-
-if has("cscope")
-	set csprg=/usr/bin/cscope
-	set csto=0
-	set cst
-	set nocsverb
-	" add any database in current directory
-	if filereadable("cscope.out")
-	    cs add cscope.out
-	" else add database pointed to by environment
-	elseif $CSCOPE_DB != ""
-	    cs add $CSCOPE_DB
-	endif
-	set csverb
-endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
