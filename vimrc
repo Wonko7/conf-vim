@@ -45,7 +45,7 @@ Plug 'airblade/vim-gitgutter'
 "Plug 'atweiden/vim-dragvisuals'
 Plug 'cfurrow/vim-l9'
 Plug 'chrisbra/vim-diff-enhanced'
-Plug 'clojure-vim/nvim-parinfer.js'
+Plug 'clojure-vim/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
 Plug 'jamessan/vim-gnupg'
 Plug 'kopischke/vim-fetch'
 Plug 'tommcdo/vim-exchange'
@@ -74,18 +74,19 @@ Plug 'vim-scripts/FuzzyFinder'
 Plug 'w0rp/ale'
 
 " rainbow paren:
-Plug 'bounceme/poppy.vim'
+Plug 'luochen1990/rainbow'
+"Plug 'bounceme/poppy.vim'
 "Plug 'Yggdroot/hiPairs'
 "Plug 'kien/rainbow_parentheses.vim'
 
 "deoplete:
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-clang'
 Plug 'zchee/deoplete-go'
 Plug 'zchee/deoplete-jedi'
 Plug 'zchee/deoplete-zsh'
 Plug 'sebastianmarkow/deoplete-rust'
 Plug 'SevereOverfl0w/async-clj-omni'
-Plug 'Shougo/deoplete.nvim'
 Plug 'Shougo/neco-syntax'
 Plug 'Shougo/neco-vim'
 Plug 'slashmili/alchemist.vim'
@@ -93,7 +94,9 @@ Plug 'eagletmt/neco-ghc'
 Plug 'carlitux/deoplete-ternjs'
 
 "lang specific:
+"scala;
 Plug 'derekwyatt/vim-scala'
+Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'heavenshell/vim-jsdoc'
 Plug 'jrk/vim-ocaml'
 Plug 'elixir-editors/vim-elixir'
@@ -145,6 +148,7 @@ let g:login	= "William Caldwell"
 let g:email	= "William@undefined.re"
 let g:login_aka	= ""
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Completion:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -195,8 +199,9 @@ highlight clear SignColumn
 """"""""""" rainbow & parens:
 
 "au! cursormoved * call PoppyInit() <-- done higher up
-let g:poppyhigh = ["identifier", "keyword", "character", "conditional", "comment"]
-let g:poppy_point_enable = 1
+"let g:poppyhigh = ["identifier", "keyword", "character", "conditional", "comment"]
+"let g:poppy_point_enable = 1
+let g:rainbow_active = 1
 
 let g:AutoPairsFlyMode = 1
 "let g:AutoPairsShortcutFastWrap='<C-i>' " fixme useless, i mode only
@@ -293,6 +298,7 @@ syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 
 let g:clojure_maxlines = 1000
 let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^go-loop']
 
 let g:parinfer_mode = "paren"
 let g:parinfer_airline_integration = 0
@@ -344,7 +350,14 @@ let g:sexp_mappings = {
 
 " cljs
 au BufNewFile,BufRead *.cljs set filetype=clojure
-set lispwords+="go-loop"
+
+
+""""""""""" scala
+
+autocmd BufWritePost *.scala silent :EnTypeCheck
+au FileType scala nnoremap <cr>d :EnDeclaration<CR>
+au FileType scala nnoremap <cr>t :EnType<CR>
+au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
 
 
 """"""""""" perl
@@ -426,7 +439,7 @@ function! MySetCursor()
 	set cursorline
 	set cursorcolumn
 	" ugly:
-	call PoppyInit()
+	"call PoppyInit()
 endfunction
 function! MyUnSetCursor()
 	set nocursorline
