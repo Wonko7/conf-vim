@@ -50,8 +50,6 @@ endif " has("autocmd")
 " General config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" pathogen
-"call pathogen#runtime_append_all_bundles()
 " check these out for bugs:
 "AnsiEsc.vim
 "argtextobj.vim
@@ -64,12 +62,82 @@ set showtabline=0
 set runtimepath+=",~/conf/vim/"
 "
 set lispwords+="go-loop"
-let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs", "syntastic", "YouCompleteMe"]
+" let g:pathogen_disabled = ["rainbow_parentheses.vim", "hiPairs", "syntastic", "YouCompleteMe"]
 "  "poppy", "auto-pairs"]
 
-"let g:parinfer_mode = "indent"
-call pathogen#infect()
-call pathogen#helptags()
+"call pathogen#infect()
+"call pathogen#helptags()
+
+"" plugins"
+call plug#begin('~/.vim/bundle')
+Plug 'altercation/vim-colors-solarized'
+Plug 'airblade/vim-gitgutter'
+"Plug 'atweiden/vim-betterdigraphs'
+"Plug 'atweiden/vim-dragvisuals'
+Plug 'cfurrow/vim-l9'
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'clojure-vim/nvim-parinfer.js'
+Plug 'jamessan/vim-gnupg'
+Plug 'kopischke/vim-fetch'
+Plug 'tommcdo/vim-exchange'
+Plug 'tommcdo/vim-lion'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vividchalk'
+"Plug 'Valloric/YouCompleteMe'
+Plug 'vim-scripts/AnsiEsc.vim'
+Plug 'vim-scripts/Gundo'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+Plug 'ervandew/supertab'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/argtextobj.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'bkad/CamelCaseMotion'
+
+Plug 'kien/ctrlp.vim'
+Plug 'vim-scripts/FuzzyFinder'
+
+"Plug 'vim-syntastic/syntastic'
+Plug 'w0rp/ale'
+
+" rainbow paren:
+Plug 'bounceme/poppy.vim'
+"Plug 'Yggdroot/hiPairs'
+"Plug 'kien/rainbow_parentheses.vim'
+
+"deoplete:
+Plug 'zchee/deoplete-clang'
+Plug 'zchee/deoplete-go'
+Plug 'zchee/deoplete-jedi'
+Plug 'zchee/deoplete-zsh'
+Plug 'sebastianmarkow/deoplete-rust'
+Plug 'SevereOverfl0w/async-clj-omni'
+Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neco-syntax'
+Plug 'Shougo/neco-vim'
+Plug 'slashmili/alchemist.vim'
+Plug 'eagletmt/neco-ghc'
+Plug 'carlitux/deoplete-ternjs'
+
+"lang specific:
+Plug 'derekwyatt/vim-scala'
+"Plug 'heavenshell/vim-jsdoc'
+Plug 'jrk/vim-ocaml'
+Plug 'elixir-editors/vim-elixir'
+Plug 'mrtazz/DoxygenToolkit.vim'
+Plug 'pangloss/vim-javascript'
+"clj:
+Plug 'tpope/vim-classpath'
+Plug 'tpope/vim-fireplace'
+Plug 'guns/vim-clojure-static'
+Plug 'guns/vim-sexp'
+Plug 'guns/vim-slamhound'
+
+call plug#end()
 
 let g:deoplete#enable_at_startup = 1
 "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -162,6 +230,9 @@ syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 
 let g:clojure_maxlines = 1000
 let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
+
+let g:parinfer_mode = "paren"
+let g:parinfer_airline_integration = 0
 
 " lispwords let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 
