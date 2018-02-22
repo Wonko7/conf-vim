@@ -8,9 +8,6 @@ set showcmd				" display incomplete commands
 set showtabline=0
 set runtimepath+=",~/conf/vim/"
 
-noremap <cr> <nop>
-
-
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
@@ -299,6 +296,10 @@ let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,
 
 let g:parinfer_mode = "paren"
 let g:parinfer_airline_integration = 0
+let g:parinfer_shift_norm_right_map = '<space>>'
+let g:parinfer_shift_norm_left_map = '<space><'
+let g:parinfer_shift_vis_right_map = 'g>'
+let g:parinfer_shift_vis_left_map = 'g<'
 
 "let mapleader = ''
 "let maplocalleader = ''
