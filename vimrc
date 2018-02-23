@@ -154,9 +154,6 @@ let g:login_aka	= ""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " completion:
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
@@ -171,44 +168,43 @@ endif
 " Plugin config:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" let g:hiPairs_hl_matchPair = { 'term'    : 'underline,bold',
-" 			\                  'cterm'   : 'underline,bold',
-" 			\                  'ctermfg' : 'NONE',
-" 			\                  'ctermbg' : 'NONE',
-" 			\                  'gui'     : 'bold',
-" 			\                  'guifg'   : 'White',
-" 			\                  'guibg'   : 'NONE' }
-"
-"
-"
-" let g:hiPairs_hl_unmatchPair = { 'term'    : 'underline,italic',
-" 			\                    'cterm'   : 'italic',
-" 			\                    'ctermfg' : '15',
-" 			\                    'ctermbg' : '12',
-" 			\                    'gui'     : 'italic',
-" 			\                    'guifg'   : 'White',
-" 			\                    'guibg'   : 'Red' }
-"
-
 let g:gitgutter_max_signs = 2000
 " hl for git gutter
 highlight clear SignColumn
 
 
-
 """"""""""" rainbow & parens:
-
-"au! cursormoved * call PoppyInit() <-- done higher up
-"let g:poppyhigh = ["identifier", "keyword", "character", "conditional", "comment"]
-"let g:poppy_point_enable = 1
-let g:rainbow_active = 1
 
 let g:AutoPairsFlyMode = 1
 "let g:AutoPairsShortcutFastWrap='<C-i>' " fixme useless, i mode only
+
+" jump to next closing pair
 let g:AutoPairsShortcutJump='<C-n>'
+let g:AutoPairsShortcutFastWrap='<C-w>' " ()|word -> (word)
+let g:AutoPairsShortcutBackInsert='<C-b>' " I really wanted to insert closing paren, not jump to closing. will balance closing.
+
 "map <C-a> :call AutoPairsMoveCharacter('<')<CR>
 
-let g:scratch_insert_autohide = 0
+let g:rainbow_active = 1
+" see: https://github.com/luochen1990/rainbow for original conf
+let g:rainbow_conf = {
+			\	'ctermfgs': ['208', '34', '4', '205'],
+			\	'operators': '_,_',
+			\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+			\	'separately': {
+			\		'*': {},
+			\		'tex': {
+			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+			\		},
+			\		'vim': {
+			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+			\		},
+			\		'html': {
+			\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+			\		},
+			\		'css': 0,
+			\	}
+			\}
 
 
 """"""""""" LINT: Disable other C linters, too slow:
@@ -427,24 +423,6 @@ source ~/.vim/fun.vim
 
 " init indentation:
 silent call My_set_style()
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" cursor sniper:
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set updatetime=2000
-
-function! MySetCursor()
-	set cursorline
-	set cursorcolumn
-	" ugly:
-	"call PoppyInit()
-endfunction
-function! MyUnSetCursor()
-	set nocursorline
-	set nocursorcolumn
-endfunction
 
 au! CursorHold * call MyUnSetCursor()
 au! CursorMoved * call MySetCursor()

@@ -109,3 +109,19 @@ fu! SeeTab()
 	endif
 endfunc
 "call SeeTab()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" cursor sniper:
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set updatetime=2000
+
+function! MySetCursor()
+	set cursorline
+	set cursorcolumn
+endfunction
+function! MyUnSetCursor()
+	set nocursorline
+	set nocursorcolumn
+endfunction
