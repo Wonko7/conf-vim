@@ -153,7 +153,6 @@ let g:login_aka	= ""
 " Completion:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" completion:
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
@@ -180,15 +179,15 @@ let g:AutoPairsFlyMode = 1
 
 " jump to next closing pair
 let g:AutoPairsShortcutJump='<C-n>'
-let g:AutoPairsShortcutFastWrap='<C-w>' " ()|word -> (word)
+let g:AutoPairsShortcutFastWrap='<C-w>' " ()|word -> (word)|
 let g:AutoPairsShortcutBackInsert='<C-b>' " I really wanted to insert closing paren, not jump to closing. will balance closing.
 
 "map <C-a> :call AutoPairsMoveCharacter('<')<CR>
 
-let g:rainbow_active = 1
 " see: https://github.com/luochen1990/rainbow for original conf
+let g:rainbow_active = 1
 let g:rainbow_conf = {
-			\	'ctermfgs': ['208', '34', '4', '205'],
+			\	'ctermfgs': ['208', '34', '39', '205'],
 			\	'operators': '_,_',
 			\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 			\	'separately': {
@@ -371,6 +370,9 @@ let highlight_function_name = 1
 autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 "autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
+
+""""""""""" latex:
+
 autocmd BufRead *.tex set makeprg=texi2pdf\ '%'
 autocmd BufRead *.tex set autoindent
 
@@ -381,8 +383,8 @@ let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_enable_es6 = 1
 nmap <silent> <Space>c ?function<cr>:noh<cr><Plug>(jsdoc)
 nmap <silent> <Space>C <Plug>(jsdoc)
-nmap <silent> <Space>d :YcmCompleter GetDoc<CR>
-nmap <silent> <Space>g :YcmCompleter GoTo<CR>
+"nmap <silent> <Space>d :YcmCompleter GetDoc<CR>
+"nmap <silent> <Space>g :YcmCompleter GoTo<CR>
 nmap <silent> <Space>a :s/\vfunction\s+([0-9a-zA-Z_]+)\s*(\(.*\))\s*\{/const \1 = \2 => {/<CR>--
 nmap <silent> <Space>A :s/\vconst\s+([0-9a-zA-Z_]+)\s*\=\s*(\(.*\))\s*\=\>\s*\{/function \1\2 {/<CR>--
 set indentkeys+=',.,?,<:>,&,|'
