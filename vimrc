@@ -67,8 +67,11 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'bkad/CamelCaseMotion'
 
-Plug 'kien/ctrlp.vim'
-Plug 'vim-scripts/FuzzyFinder'
+" buffer/file nav:
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+"Plug 'kien/ctrlp.vim'
+"Plug 'vim-scripts/FuzzyFinder'
 
 "Plug 'vim-syntastic/syntastic'
 Plug 'w0rp/ale'

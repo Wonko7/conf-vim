@@ -7,9 +7,13 @@ if &diff
   map gN [czz
 endif
 
-map <SPACE>o :CtrlPMRU<RETURN><c-d>
-map <SPACE>f :CtrlP<RETURN>
-map <SPACE>e :FufBuffer<RETURN>
+map <SPACE><SPACE> :Buffers<RETURN>
+map <SPACE>o :History<RETURN>
+map <SPACE>f :Files<RETURN>
+map <SPACE>c :Commits<RETURN>
+map <SPACE>C :BCommits<RETURN>
+map <SPACE>g :GFiles<RETURN>
+map <SPACE>/ :History/<RETURN>
 
 map U :GundoToggle<CR>
 
