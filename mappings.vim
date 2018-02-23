@@ -13,6 +13,7 @@ map <SPACE>f :Files<RETURN>
 map <SPACE>c :Commits<RETURN>
 map <SPACE>C :BCommits<RETURN>
 map <SPACE>g :GFiles<RETURN>
+map <SPACE>r :Rg<SPACE>
 map <SPACE>/ :History/<RETURN>
 
 map U :GundoToggle<CR>
