@@ -432,8 +432,6 @@ augroup END
 
 """"""""""" javascript
 
-let g:jsdoc_allow_input_prompt = 1
-let g:jsdoc_enable_es6 = 1
 nmap <silent> <Space>c ?function<cr>:noh<cr><Plug>(jsdoc)
 nmap <silent> <Space>C <Plug>(jsdoc)
 "nmap <silent> <Space>d :YcmCompleter GetDoc<CR>
@@ -442,6 +440,20 @@ nmap <silent> <Space>a :s/\vfunction\s+([0-9a-zA-Z_]+)\s*(\(.*\))\s*\{/const \1 
 nmap <silent> <Space>A :s/\vconst\s+([0-9a-zA-Z_]+)\s*\=\s*(\(.*\))\s*\=\>\s*\{/function \1\2 {/<CR>--
 set indentkeys+=',.,?,<:>,&,|'
 let g:javascript_plugin_jsdoc = 1
+
+"Add extra filetypes
+let g:deoplete#sources#ternjs#filetypes = [
+                \ 'jsx',
+                \ 'javascript.jsx',
+                \ 'vue',
+                \ ]
+let g:deoplete#sources#ternjs#case_insensitive = 1
+" maybe:
+let g:deoplete#sources#ternjs#docs = 1
+let g:deoplete#sources#ternjs#types = 1
+let g:deoplete#sources#ternjs#filter = 0
+let g:deoplete#sources#ternjs#include_keywords = 1
+let g:deoplete#sources#ternjs#omit_object_prototype = 0
 
 
 """"""""""" HEX/Binary: vim -b : edit binary using xxd-format!
