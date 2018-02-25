@@ -390,6 +390,14 @@ augroup Scala
 	au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
 augroup END
 
+let g:deoplete#sources = {}
+let g:deoplete#sources.scala = ['buffer', 'tags', 'omni']
+let g:deoplete#omni#input_patterns = {}
+let g:deoplete#omni#input_patterns.scala = [
+  \ '[^. *\t]\.\w*',
+  \ '[:\[,] ?\w*',
+  \ '^import .*'
+  \]
 
 """"""""""" perl
 
