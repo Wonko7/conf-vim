@@ -321,6 +321,9 @@ syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
 
 """"""""""" clojure:
 
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+
 let g:clojure_maxlines = 1000
 let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^go-loop']
