@@ -115,8 +115,6 @@ endfunc
 " cursor sniper:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set updatetime=2000
-
 function! MySetCursor()
 	set cursorline
 	set cursorcolumn

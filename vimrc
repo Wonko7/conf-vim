@@ -39,22 +39,23 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/bundle')
+
 Plug 'altercation/vim-colors-solarized'
-Plug 'airblade/vim-gitgutter'
-"Plug 'atweiden/vim-betterdigraphs'
-"Plug 'atweiden/vim-dragvisuals'
-Plug 'cfurrow/vim-l9'
 Plug 'chrisbra/vim-diff-enhanced'
-Plug 'clojure-vim/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
 Plug 'jamessan/vim-gnupg'
+" open/fite/at/line-number.txt:88
 Plug 'kopischke/vim-fetch'
+" cxiw mark word to exchange:
 Plug 'tommcdo/vim-exchange'
-Plug 'tommcdo/vim-lion'
+" col align: gl<motion> or v<motions><enter>:
+Plug 'junegunn/vim-easy-align'
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vividchalk'
 "Plug 'Valloric/YouCompleteMe'
+" show dumped shell escape colors as colors:
 Plug 'vim-scripts/AnsiEsc.vim'
 Plug 'vim-scripts/Gundo'
 
@@ -97,15 +98,16 @@ Plug 'eagletmt/neco-ghc'
 Plug 'carlitux/deoplete-ternjs'
 
 "lang specific:
+Plug 'elixir-editors/vim-elixir'
+Plug 'jrk/vim-ocaml'
+Plug 'mrtazz/DoxygenToolkit.vim'
+Plug 'pangloss/vim-javascript'
 "scala;
 Plug 'derekwyatt/vim-scala'
 Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'heavenshell/vim-jsdoc'
-Plug 'jrk/vim-ocaml'
-Plug 'elixir-editors/vim-elixir'
-Plug 'mrtazz/DoxygenToolkit.vim'
-Plug 'pangloss/vim-javascript'
 "clj:
+Plug 'clojure-vim/nvim-parinfer.js', { 'do': 'npm install neovim' } " also :UpdateRemotePlugins
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-fireplace'
 Plug 'guns/vim-clojure-static'
@@ -151,6 +153,9 @@ let g:login	= "William Caldwell"
 let g:email	= "William@undefined.re"
 let g:login_aka	= ""
 
+" toggle cursor:
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Completion:
@@ -159,6 +164,7 @@ let g:login_aka	= ""
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/5/lib64/libclang.so'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 if !exists('g:deoplete#omni#input_patterns')
@@ -169,6 +175,17 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin config:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" align cols:
+
+vmap <Enter> <Plug>(EasyAlign)
+nmap gl <Plug>(EasyAlign)
+" align % on space.. omg:
+nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
+" nmap gL i<CR><Esc>d0=%%v%:LiveEasyAlign v/\v^\s{2,}/<cr> <cr>kJ=%
+" nmap gL i<CR><Esc>d0=%%v%<cr>1 kJ=%
+
+""""""""""" git
 
 let g:gitgutter_max_signs = 2000
 " hl for git gutter
@@ -357,15 +374,21 @@ let g:sexp_mappings = {
 			\ }
 
 " cljs
-au BufNewFile,BufRead *.cljs set filetype=clojure
+augroup Clojure
+	au!
+	au BufNewFile,BufRead *.cljs set filetype=clojure
+augroup END
 
 
 """"""""""" scala
 
-autocmd BufWritePost *.scala silent :EnTypeCheck
-au FileType scala nnoremap <cr>d :EnDeclaration<CR>
-au FileType scala nnoremap <cr>t :EnType<CR>
-au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
+augroup Scala
+	au!
+	au BufWritePost *.scala silent :EnTypeCheck
+	au FileType scala nnoremap <cr>d :EnDeclaration<CR>
+	au FileType scala nnoremap <cr>t :EnType<CR>
+	au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
+augroup END
 
 
 """"""""""" perl
@@ -380,14 +403,20 @@ let highlight_function_name = 1
 
 """"""""""" python:
 
-autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
-"autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+augroup Python
+	au!
+	autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+	"autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+augroup END
 
 
 """"""""""" latex:
 
-autocmd BufRead *.tex set makeprg=texi2pdf\ '%'
-autocmd BufRead *.tex set autoindent
+augroup Latex
+	au!
+	autocmd BufRead *.tex set makeprg=texi2pdf\ '%'
+	autocmd BufRead *.tex set autoindent
+augroup END
 
 
 """"""""""" javascript
@@ -439,6 +468,10 @@ source ~/.vim/fun.vim
 " init indentation:
 silent call My_set_style()
 
-au! CursorHold * call MyUnSetCursor()
-au! CursorMoved * call MySetCursor()
-au! CursorMovedI * call MyUnSetCursor()
+set updatetime=2000
+augroup snipe_cursor
+	autocmd!
+	autocmd CursorHold * call MyUnSetCursor()
+	autocmd CursorMoved * call MySetCursor()
+	autocmd CursorMovedI * call MyUnSetCursor()
+augroup END
