@@ -30,13 +30,10 @@ function! My_set_style()
 		set softtabstop=4
 		set tabstop=8
 		set shiftwidth=4
-		set smarttab
+		set nosmarttab
 		set comments=sl:/*,mb:\ *,ex:\ */
-		let g:DoxygenToolkit_interCommentTag = "* "
-		let g:DoxygenToolkit_interCommentBlock = "* "
-		let g:DoxygenToolkit_cinoptions = "c1C1"
 		let g:my_set_style = 1
-		echo "kernel-4 (indent=tab, len=4, tab_display=4)"
+		echo "normal-4 (indent=tab, len=4, tab_display=4)"
 	"if g:my_set_style == 0
 	"	set expandtab
 	"	set softtabstop=3
@@ -72,7 +69,7 @@ function! My_set_style()
 		let g:DoxygenToolkit_interCommentBlock = "** "
 		let g:DoxygenToolkit_cinoptions = "c0C1"
                 if g:my_set_style != -1
-			echo "kernel-gnu-comments-8 (indent=space, len=2, tab_display=8)"
+			echo "kernel-gnu-comments-8 (indent=tab, len=2, tab_display=8)"
 		endif
 		let g:my_set_style = 3 
 	else

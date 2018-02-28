@@ -9,11 +9,12 @@ set showtabline=0
 set runtimepath+=",~/conf/vim/"
 
 if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-  autocmd GUIEnter * set vb t_vb=
-  set noerrorbells
+	syntax on
+	set hlsearch
+	autocmd GUIEnter * set vb t_vb=
+	set noerrorbells
 endif
+
 set vb t_vb=
 set noerrorbells
 
@@ -22,15 +23,14 @@ set noerrorbells
 " Don't do it when the position is invalid or when inside an event handler
 " (happens when dropping a file on gvim).
 if has("autocmd")
-  filetype plugin indent on
-  augroup vimrcEx
-  au!
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
-
-  augroup END
+	filetype plugin indent on
+	augroup vimrcEx
+		au!
+		autocmd BufReadPost *
+					\ if line("'\"") > 0 && line("'\"") <= line("$") |
+					\   exe "normal g`\"" |
+					\ endif
+	augroup END
 endif
 
 
@@ -168,7 +168,7 @@ let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/5/lib64/libclang.s
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
+	let g:deoplete#omni#input_patterns = {}
 endif
 
 
@@ -180,15 +180,18 @@ endif
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap gl <Plug>(EasyAlign)
-" align % on space.. omg:
+"nmap g= Vip:EasyAlign /\v([-+^*~!<>]?=)/<cr>--
+nmap g= Vip:EasyAlign /[-+*~^.:!<>]\?=/<cr>--
+
+" align % on space.. omg... this got out of hand real fast:
 nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
 " nmap gL i<CR><Esc>d0=%%v%:LiveEasyAlign v/\v^\s{2,}/<cr> <cr>kJ=%
 " nmap gL i<CR><Esc>d0=%%v%<cr>1 kJ=%
 
 """"""""""" git
 
-let g:gitgutter_max_signs = 2000
 " hl for git gutter
+let g:gitgutter_max_signs = 2000
 highlight clear SignColumn
 
 
@@ -239,8 +242,8 @@ let g:rainbow_conf = {
 """"""""""" LINT: Disable other C linters, too slow:
 
 let g:ale_linters = {
-\   'c': ['clang'],
-\}
+			\   'c': ['clang'],
+			\}
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 
@@ -298,10 +301,10 @@ if has("cscope")
 	set nocsverb
 	" add any database in current directory
 	if filereadable("cscope.out")
-	    cs add cscope.out
-	" else add database pointed to by environment
+		cs add cscope.out
+		" else add database pointed to by environment
 	elseif $CSCOPE_DB != ""
-	    cs add $CSCOPE_DB
+		cs add $CSCOPE_DB
 	endif
 	set csverb
 endif
@@ -312,7 +315,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax keyword Comment SAFE_CALL
-syn keyword	cTodo		contained TODO FIXME XXX todo fixme xxx
+syntax keyword cTodo contained TODO FIXME XXX todo fixme xxx
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -459,14 +462,14 @@ let g:deoplete#sources#ternjs#omit_object_prototype = 0
 """"""""""" HEX/Binary: vim -b : edit binary using xxd-format!
 
 augroup Binary
-  au!
-  au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
-  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
-  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
-  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
-  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
-  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
-  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
+	au!
+	au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
+	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
+	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
+	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
+	au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+	au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
 augroup END
 au BufNewFile,BufRead *todo,*TODO		set ft=wtodo
 au BufNewFile,BufRead *.muttrc		set ft=muttrc
@@ -476,7 +479,7 @@ au BufNewFile,BufRead *.muttrc		set ft=muttrc
 
 " started In Diff-Mode set diffexpr (plugin not loaded yet)
 if &diff
-    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+	let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
 endif
 
 

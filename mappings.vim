@@ -7,6 +7,7 @@ if &diff
   map gN [czz
 endif
 
+" FZF also see tags. :lines maybe..
 map <SPACE><SPACE> :Buffers<RETURN>
 map <SPACE>o :History<RETURN>
 map <SPACE>f :Files<RETURN>
@@ -48,7 +49,7 @@ map Y y$
 
 map <F1> ggVGg?
 
-" cscope:
+" cscope: FZF? see https://gist.github.com/amitab/cd051f1ea23c588109c6cfcb7d1d5776
 nmap <Space>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-Space>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <C-Space>c :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -59,11 +60,10 @@ nmap <C-Space>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-Space>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 " c args: FIXME do this in c langs only?
-map g> cxiavia<ESC>Wcxiavia<ESC>
-map <CR>> cxiavia<ESC>Wcxiavia<ESC>
-"W
-map g< cxiaviao<ESC>bbcxia
-map <CR>< cxiaviao<ESC>bbcxia
+map g> cxiaWcxia
+"map <CR>> cxiavia<ESC>Wcxiavia<ESC>
+map g< cxiabcxia
+"map <CR>< cxiaviao<ESC>bcxia
 
 " copy/paste to *
 vnoremap <C-p> "*p
