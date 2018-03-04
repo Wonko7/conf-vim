@@ -101,7 +101,9 @@ Plug 'carlitux/deoplete-ternjs'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jrk/vim-ocaml'
 Plug 'mrtazz/DoxygenToolkit.vim'
+"js:
 Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
 "scala;
 Plug 'derekwyatt/vim-scala'
 Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
@@ -110,6 +112,9 @@ Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 Plug 'clojure-vim/nvim-parinfer.js', { 'do': 'npm install neovim' } " also :UpdateRemotePlugins
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-fireplace'
+" FIXME: doesn't seem useful:
+"Plug 'tpope/vim-salve'
+"Plug 'tpope/vim-dispatch'
 Plug 'guns/vim-clojure-static'
 Plug 'guns/vim-sexp'
 Plug 'guns/vim-slamhound'
@@ -181,7 +186,7 @@ endif
 vmap <Enter> <Plug>(EasyAlign)
 nmap gl <Plug>(EasyAlign)
 "nmap g= Vip:EasyAlign /\v([-+^*~!<>]?=)/<cr>--
-nmap g= Vip:EasyAlign /[-+*~^.:!<>]\?=/<cr>--
+nmap g= Vip:EasyAlign /[-+*~^.:!<>]\?=>\?/<cr>--
 
 " align % on space.. omg... this got out of hand real fast:
 nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
