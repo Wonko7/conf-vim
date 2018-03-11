@@ -9,11 +9,9 @@ nvr_cmd="nvr -s --servername $SOCKET_PREFIX/$VIM_SERVER $@"
 # avoid grabbing st from local node_modules... *sigh* do something cleaner about this.
 PATH=/usr/bin:/bin
 
-echo $SOCKET_PREFIX/$VIM_SERVER
 mkdir -p $SOCKET_PREFIX
 if nvr --serverlist | egrep -q "^$SOCKET_PREFIX/$VIM_SERVER\$"; then
 	# send file open to existing session:
-	echo $nvr_cmd
 	$nvr_cmd
 
 	# find vim window and raise:
@@ -27,6 +25,5 @@ if nvr --serverlist | egrep -q "^$SOCKET_PREFIX/$VIM_SERVER\$"; then
 	fi
 else
 	# new session:
-	echo st -t $VIM_SERVER -e tmux new-session -s auto_$VIM_SERVER "$nvr_cmd" \; set status off \;
 	(st -t $VIM_SERVER -e tmux new-session -s auto_$VIM_SERVER "$nvr_cmd" \; set status off \;)&
 fi
