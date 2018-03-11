@@ -103,11 +103,12 @@ Plug 'jrk/vim-ocaml'
 Plug 'mrtazz/DoxygenToolkit.vim'
 "js:
 Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
+Plug 'heavenshell/vim-jsdoc'
+"Plug 'othree/yajs.vim' --> see es6 companion
+"Plug 'leafgarland/typescript-vim'
 "scala;
 Plug 'derekwyatt/vim-scala'
 Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'heavenshell/vim-jsdoc'
 "clj:
 Plug 'clojure-vim/nvim-parinfer.js', { 'do': 'npm install neovim' } " also :UpdateRemotePlugins
 Plug 'tpope/vim-classpath'
@@ -210,6 +211,13 @@ command! -bang -nargs=* Rg
   \   <bang>0)
 
 
+command! -bang -nargs=* RgCurrentWord
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(expand('<cword>')), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
 """"""""""" rainbow & parens:
 
 let g:AutoPairsFlyMode = 1
@@ -229,7 +237,6 @@ let g:rainbow_conf = {
 			\	'operators': '_,_',
 			\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 			\	'separately': {
-			\		'*': {},
 			\		'tex': {
 			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
 			\		},
@@ -448,6 +455,13 @@ nmap <silent> <Space>a :s/\vfunction\s+([0-9a-zA-Z_]+)\s*(\(.*\))\s*\{/const \1 
 nmap <silent> <Space>A :s/\vconst\s+([0-9a-zA-Z_]+)\s*\=\s*(\(.*\))\s*\=\>\s*\{/function \1\2 {/<CR>--
 set indentkeys+=',.,?,<:>,&,|'
 let g:javascript_plugin_jsdoc = 1
+let g:jsdoc_allow_input_prompt = 1
+" for ul coding style:
+let g:javascript_opfirst = '^\C\%([<>=,?^%|/&]\|\([-:+]\)\1\@!\|\*\+\|!=\|in\%(stanceof\)\=\>\)'
+
+augroup javascript
+        autocmd FileType javascript syntax clear jsFuncBlock
+augroup END
 
 "Add extra filetypes
 let g:deoplete#sources#ternjs#filetypes = [
@@ -462,6 +476,8 @@ let g:deoplete#sources#ternjs#types = 1
 let g:deoplete#sources#ternjs#filter = 0
 let g:deoplete#sources#ternjs#include_keywords = 1
 let g:deoplete#sources#ternjs#omit_object_prototype = 0
+
+
 
 
 """"""""""" HEX/Binary: vim -b : edit binary using xxd-format!
@@ -492,6 +508,7 @@ endif
 " Sub conf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+source ~/.vim/fzf_cscope.vim
 source ~/.vim/mappings.vim
 source ~/.vim/headers.vim
 source ~/.vim/fun.vim

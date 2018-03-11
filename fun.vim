@@ -1,5 +1,5 @@
 let g:my_set_spell = 0
-let g:my_set_style = 1
+let g:my_set_style = -1
 
 function! My_set_spell()
 	if g:my_set_spell == 0
@@ -58,7 +58,7 @@ function! My_set_style()
 		let g:DoxygenToolkit_cinoptions = "c1C1"
 		echo "kernel-8 (indent=tab, len=8, tab_display=8)"
 		let g:my_set_style = 2 
-	elseif g:my_set_style == 2 || g:my_set_style == -1
+	elseif g:my_set_style == 2
 		set noexpandtab
 		set softtabstop=8
 		set tabstop=8
@@ -72,7 +72,7 @@ function! My_set_style()
 			echo "kernel-gnu-comments-8 (indent=tab, len=2, tab_display=8)"
 		endif
 		let g:my_set_style = 3 
-	else
+	else " "|| g:my_set_style == -1
 		set expandtab
 		set softtabstop=2
 		set tabstop=8

@@ -11,10 +11,11 @@ endif
 map <SPACE><SPACE> :Buffers<RETURN>
 map <SPACE>o :History<RETURN>
 map <SPACE>f :Files<RETURN>
-map <SPACE>c :Commits<RETURN>
-map <SPACE>C :BCommits<RETURN>
-map <SPACE>g :GFiles<RETURN>
-map <SPACE>r :Rg<SPACE>
+" map <SPACE>c :Commits<RETURN>
+" map <SPACE>C :BCommits<RETURN>
+map <SPACE>gf :GFiles<RETURN>
+map <SPACE>R :Rg<SPACE>
+map <SPACE>r :RgCurrentWord<cr>
 map <SPACE>/ :History/<RETURN>
 
 map U :GundoToggle<CR>
@@ -33,7 +34,6 @@ map <SPACE>l <C-w><right>
 map <SPACE>h <C-w><left>
 map + <C-w>>
 
-
 map -d :%s/\v\s*$//<RETURN>``<ESC>:noh<RETURN>
 map -u yypVr=
 map -- <ESC>:noh<RETURN>
@@ -49,15 +49,21 @@ map Y y$
 
 map <F1> ggVGg?
 
+
 " cscope: FZF? see https://gist.github.com/amitab/cd051f1ea23c588109c6cfcb7d1d5776
-nmap <Space>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-Space>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-Space>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-Space>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+nnoremap <silent> <space>s  :call Cscope('8', expand('<cword>'))<CR>
+nnoremap <silent> <space>cd :call Cscope('1', expand('<cword>'))<CR>
+nnoremap <silent> <space>cf :call Cscope('7', expand('<cword>'))<CR>
+nnoremap <silent> <space>cc :call Cscope('3', expand('<cword>'))<CR>
+nnoremap <silent> <space>cC :call Cscope('2', expand('<cword>'))<CR>
+" nmap <Space>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-Space>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-Space>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-Space>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-Space>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-Space>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+" nmap <C-Space>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+" nmap <C-Space>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 " c args: FIXME do this in c langs only?
 map g> cxiaWcxia
