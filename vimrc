@@ -169,9 +169,9 @@ set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr
 
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup           = 1
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/5/lib64/libclang.so'
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType        = "<c-n>"
 
 if !exists('g:deoplete#omni#input_patterns')
 	let g:deoplete#omni#input_patterns = {}
@@ -186,13 +186,9 @@ endif
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap gl <Plug>(EasyAlign)
-"nmap g= Vip:EasyAlign /\v([-+^*~!<>]?=)/<cr>--
 nmap g= Vip:EasyAlign /[-+*~^.:!<>]\?=>\?/<cr>--
-
 " align % on space.. omg... this got out of hand real fast:
 nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
-" nmap gL i<CR><Esc>d0=%%v%:LiveEasyAlign v/\v^\s{2,}/<cr> <cr>kJ=%
-" nmap gL i<CR><Esc>d0=%%v%<cr>1 kJ=%
 
 """"""""""" git
 
@@ -226,9 +222,9 @@ let g:AutoPairsFlyMode = 1
 "let g:AutoPairsShortcutFastWrap='<C-i>' " fixme useless, i mode only
 
 " jump to next closing pair
-let g:AutoPairsShortcutJump='<C-n>'
-let g:AutoPairsShortcutFastWrap='<C-w>' " ()|word -> (word)|
-let g:AutoPairsShortcutBackInsert='<C-b>' " I really wanted to insert closing paren, not jump to closing. will balance closing.
+let g:AutoPairsShortcutJump       = '<C-n>'
+let g:AutoPairsShortcutFastWrap   = '<C-w>' " ()|word -> (word)|
+let g:AutoPairsShortcutBackInsert = '<C-b>' " I really wanted to insert closing paren, not jump to closing. will balance closing.
 
 "map <C-a> :call AutoPairsMoveCharacter('<')<CR>
 
@@ -255,10 +251,10 @@ let g:rainbow_conf = {
 
 """"""""""" LINT: Disable other C linters, too slow:
 
-let g:ale_linters = {
+let g:ale_linters      = {
 			\   'c': ['clang'],
 			\}
-let g:ale_sign_error = '✘'
+let g:ale_sign_error   = '✘'
 let g:ale_sign_warning = '⚠'
 
 
@@ -287,15 +283,15 @@ endif
 
 let g:airline_powerline_fonts = 1
 
-let g:airline_symbols.branch = '⎇'
-let g:airline#extensions#whitespace#trailing_format = 'WS:%s'
+let g:airline_symbols.branch                            = '⎇'
+let g:airline#extensions#whitespace#trailing_format     = 'WS:%s'
 let g:airline#extensions#whitespace#mixed_indent_format = 'MI:%s'
-let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#whitespace#enabled             = 0
 
 
 """"""""""" sneak
 
-let g:sneak#streak = 0
+let g:sneak#streak     = 0
 let g:sneak#use_ic_scs = 1
 
 noremap g" "
@@ -338,23 +334,23 @@ syntax keyword cTodo contained TODO FIXME XXX todo fixme xxx
 
 """"""""""" clojure:
 
-let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns         = {}
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
-let g:clojure_maxlines = 1000
-let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
+let g:clojure_maxlines              = 1000
+let g:clojure_special_indent_words  = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^go-loop']
 
-let g:parinfer_mode = "paren"
-let g:parinfer_airline_integration = 0
+let g:parinfer_mode                 = "paren"
+let g:parinfer_airline_integration  = 0
 let g:parinfer_shift_norm_right_map = '<space>>'
-let g:parinfer_shift_norm_left_map = '<space><'
-let g:parinfer_shift_vis_right_map = 'g>'
-let g:parinfer_shift_vis_left_map = 'g<'
+let g:parinfer_shift_norm_left_map  = '<space><'
+let g:parinfer_shift_vis_right_map  = 'g>'
+let g:parinfer_shift_vis_left_map   = 'g<'
 
 "let mapleader = ''
 "let maplocalleader = ''
-let mapleader="\<cr>"
+let mapleader      = "\<cr>"
 let maplocalleader = "\<cr>"
 
 let g:sexp_insert_after_wrap = 1
@@ -410,9 +406,9 @@ augroup Scala
 	au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
 augroup END
 
-let g:deoplete#sources = {}
-let g:deoplete#sources.scala = ['buffer', 'tags', 'omni']
-let g:deoplete#omni#input_patterns = {}
+let g:deoplete#sources                   = {}
+let g:deoplete#sources.scala             = ['buffer', 'tags', 'omni']
+let g:deoplete#omni#input_patterns       = {}
 let g:deoplete#omni#input_patterns.scala = [
   \ '[^. *\t]\.\w*',
   \ '[:\[,] ?\w*',
@@ -421,12 +417,12 @@ let g:deoplete#omni#input_patterns.scala = [
 
 """"""""""" perl
 
-let perl_include_POD=1
-let perl_extended_vars=1
+let perl_include_POD          = 1
+let perl_extended_vars        = 1
 
-let bash_is_sh=1
+let bash_is_sh                = 1
 let highlight_balanced_quotes = 1
-let highlight_function_name = 1
+let highlight_function_name   = 1
 
 
 """"""""""" python:
@@ -473,12 +469,12 @@ let g:deoplete#sources#ternjs#filetypes = [
                 \ 'javascript.jsx',
                 \ 'vue',
                 \ ]
-let g:deoplete#sources#ternjs#case_insensitive = 1
+let g:deoplete#sources#ternjs#case_insensitive      = 1
 " maybe:
-let g:deoplete#sources#ternjs#docs = 1
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#filter = 0
-let g:deoplete#sources#ternjs#include_keywords = 1
+let g:deoplete#sources#ternjs#docs                  = 1
+let g:deoplete#sources#ternjs#types                 = 1
+let g:deoplete#sources#ternjs#filter                = 0
+let g:deoplete#sources#ternjs#include_keywords      = 1
 let g:deoplete#sources#ternjs#omit_object_prototype = 0
 
 
