@@ -210,13 +210,15 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
-
-command! -bang -nargs=* RgCurrentWord
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(expand('<cword>')), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+function! RgCurrentWord()
+  let l:dir = system('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel ' . expand('%:p') . ' | head -n 1')
+  if !filereadable(l:dir)
+    " FIXME: might make more sense to use pwd... try it out
+    let l:dir = expand('%:p:h')
+  endif
+  let l:curr_word = shellescape(expand('<cword>'))
+  call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . l:curr_word . ' ' . l:dir, 1, fzf#vim#with_preview('right:30%', '?'), 0)
+endfunc
 
 """"""""""" rainbow & parens:
 
@@ -457,10 +459,12 @@ set indentkeys+=',.,?,<:>,&,|'
 let g:javascript_plugin_jsdoc = 1
 let g:jsdoc_allow_input_prompt = 1
 " for ul coding style:
-let g:javascript_opfirst = '^\C\%([<>=,?^%|/&]\|\([-:+]\)\1\@!\|\*\+\|!=\|in\%(stanceof\)\=\>\)'
+let g:javascript_opfirst = '\C\%([<>=,?^%|/&]\|\([-:+]\)\1\@!\|\*\+\|!=\|in\%(stanceof\)\=\>\)'
+                            "'\C\%([<>=,.?^%|/&]\|\([-:+]\)\1\@!\|\*\+\|!=\|in\%(stanceof\)\=\>\)'
 
 augroup javascript
         autocmd FileType javascript syntax clear jsFuncBlock
+        "autocmd FileType javascript set cino=(0,W2
 augroup END
 
 "Add extra filetypes

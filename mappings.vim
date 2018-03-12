@@ -15,7 +15,7 @@ map <SPACE>f :Files<RETURN>
 " map <SPACE>C :BCommits<RETURN>
 map <SPACE>gf :GFiles<RETURN>
 map <SPACE>R :Rg<SPACE>
-map <SPACE>r :RgCurrentWord<cr>
+map <SPACE>r :call RgCurrentWord()<cr>
 map <SPACE>/ :History/<RETURN>
 
 map U :GundoToggle<CR>
