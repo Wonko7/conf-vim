@@ -23,20 +23,23 @@ set noerrorbells
 " Don't do it when the position is invalid or when inside an event handler
 " (happens when dropping a file on gvim).
 if has("autocmd")
-	filetype plugin indent on
-	augroup vimrcEx
-		au!
-		autocmd BufReadPost *
-					\ if line("'\"") > 0 && line("'\"") <= line("$") |
-					\   exe "normal g`\"" |
-					\ endif
-	augroup END
+  filetype plugin indent on
+  augroup vimrcEx
+    au!
+    autocmd BufReadPost *
+          \ if line("'\"") > 0 && line("'\"") <= line("$") |
+          \   exe "normal g`\"" |
+          \ endif
+  augroup END
 endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+let g:node_host_prog = '/home/wjc/.nvm/versions/node/v8.12.0/bin/neovim-node-host'
 
 call plug#begin('~/.vim/bundle')
 
@@ -54,23 +57,33 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vividchalk'
+Plug 'tpope/vim-endwise'
+Plug 'Yggdroot/indentLine'
+
 "Plug 'Valloric/YouCompleteMe'
 " show dumped shell escape colors as colors:
 Plug 'vim-scripts/AnsiEsc.vim'
-Plug 'vim-scripts/Gundo'
+" FIXME tmp broken here: Plug 'vim-scripts/Gundo'
+Plug 'lambdalisue/suda.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'ervandew/supertab'
-Plug 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs' "FIXME enable globally, disable for clojure?
+"Plug 'Shougo/neopairs.vim'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'justinmk/vim-sneak'
-Plug 'bkad/CamelCaseMotion'
+" FIXME: only load this for js & co:
+"Plug 'bkad/CamelCaseMotion'
 
 " buffer/file nav:
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'Shougo/denite.nvim'
+Plug 'Shougo/neomru.vim'
+Plug 'airblade/vim-rooter'
+"Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'kien/ctrlp.vim'
 "Plug 'vim-scripts/FuzzyFinder'
 
@@ -82,6 +95,19 @@ Plug 'luochen1990/rainbow'
 "Plug 'bounceme/poppy.vim'
 "Plug 'Yggdroot/hiPairs'
 "Plug 'kien/rainbow_parentheses.vim'
+
+""" nvim completion:
+""Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+""Plug 'ncm2/ncm2-bufword'
+""Plug 'ncm2/ncm2-tmux'
+""Plug 'ncm2/ncm2-path'
+""Plug 'ncm2/ncm2-tagprefix'
+""Plug 'ncm2/ncm2-cssomni'
+""Plug 'ncm2/ncm2-tern'
+""Plug 'mhartington/nvim-typescript'
+""Plug 'ncm2/ncm2-vim'
 
 "deoplete:
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -101,16 +127,22 @@ Plug 'carlitux/deoplete-ternjs'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jrk/vim-ocaml'
 Plug 'mrtazz/DoxygenToolkit.vim'
+Plug 'udalov/kotlin-vim'
+Plug 'neovimhaskell/haskell-vim'
 "js:
-Plug 'pangloss/vim-javascript'
-Plug 'heavenshell/vim-jsdoc'
+Plug 'isRuslan/vim-es6'
+Plug 'jparise/vim-graphql'
+"Plug 'pangloss/vim-javascript'
+"Plug 'heavenshell/vim-jsdoc'
 "Plug 'othree/yajs.vim' --> see es6 companion
 "Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim'
 "scala;
 Plug 'derekwyatt/vim-scala'
 Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 "clj:
-Plug 'clojure-vim/nvim-parinfer.js', { 'do': 'npm install neovim' } " also :UpdateRemotePlugins
+"Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
+"Plug 'bhurlow/vim-parinfer',
 Plug 'tpope/vim-classpath'
 Plug 'tpope/vim-fireplace'
 " FIXME: doesn't seem useful:
@@ -118,10 +150,12 @@ Plug 'tpope/vim-fireplace'
 "Plug 'tpope/vim-dispatch'
 Plug 'guns/vim-clojure-static'
 Plug 'guns/vim-sexp'
+" FIXME: use my fork:
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'guns/vim-slamhound'
+Plug 'vim-scripts/paredit.vim'
 
 call plug#end()
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General stuff:
@@ -156,7 +190,7 @@ set nowrapscan
 " for file comment headers:
 " plugin configuration, user info
 let g:login	= "William Caldwell"
-let g:email	= "William@undefined.re"
+let g:email	= "william@undefined.re"
 let g:login_aka	= ""
 
 " toggle cursor:
@@ -170,31 +204,67 @@ set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
 let g:deoplete#enable_at_startup           = 1
-let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/5/lib64/libclang.so'
+let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/7/lib64/libclang.so'
 let g:SuperTabDefaultCompletionType        = "<c-n>"
 
 if !exists('g:deoplete#omni#input_patterns')
-	let g:deoplete#omni#input_patterns = {}
+  let g:deoplete#omni#input_patterns = {}
 endif
+
+" ncm2
+
+"let g:ncm2#matcher = 'abbrfuzzy'
+"" use a sorter that's more friendly for fuzzy match
+"let g:ncm2#sorter = 'abbrfuzzy'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin config:
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" align cols:
+""""""""""" indent levels for spaces:
+
+let g:indentLine_char = '▏'
+
+""""""""""" align cols:
 
 vmap <Enter> <Plug>(EasyAlign)
 nmap gl <Plug>(EasyAlign)
 nmap g= Vip:EasyAlign /[-+*~^.:!<>]\?=>\?/<cr>--
+nmap g<space> Vip<cr> <cr>--
+nmap g*       Vip<cr>* <cr>--
+vmap =        <cr>=<cr>
+vmap <space>  <cr><space><cr>
 " align % on space.. omg... this got out of hand real fast:
-nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
+"nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
+nmap gl i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%
+nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%:ParinferOn<cr>
 
 """"""""""" git
 
 " hl for git gutter
 let g:gitgutter_max_signs = 2000
 highlight clear SignColumn
+
+
+""""""""""" Denite:
+
+call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+call denite#custom#var('file/rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+call denite#custom#option('default', 'prompt', '>')
+
+call denite#custom#map(
+      \ 'insert',
+      \ '<down>',
+      \ '<denite:move_to_next_line>',
+      \ 'noremap'
+      \)
+call denite#custom#map(
+      \ 'insert',
+      \ '<up>',
+      \ '<denite:move_to_previous_line>',
+      \ 'noremap')
 
 
 """"""""""" rg for fzf
@@ -222,57 +292,60 @@ let g:AutoPairsFlyMode = 1
 "let g:AutoPairsShortcutFastWrap='<C-i>' " fixme useless, i mode only
 
 " jump to next closing pair
+"" "let b:autopairs_enabled = 1  wait what?
 let g:AutoPairsShortcutJump       = '<C-n>'
 let g:AutoPairsShortcutFastWrap   = '<C-w>' " ()|word -> (word)|
 let g:AutoPairsShortcutBackInsert = '<C-b>' " I really wanted to insert closing paren, not jump to closing. will balance closing.
-
 "map <C-a> :call AutoPairsMoveCharacter('<')<CR>
 
 " see: https://github.com/luochen1990/rainbow for original conf
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-			\	'ctermfgs': ['208', '34', '39', '205'],
-			\	'operators': '_,_',
-			\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-			\	'separately': {
-			\		'tex': {
-			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
-			\		},
-			\		'vim': {
-			\			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
-			\		},
-			\		'html': {
-			\			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
-			\		},
-			\		'css': 0,
-			\	}
-			\}
+      \	'ctermfgs': ['208', '34', '39', '205'],
+      \	'operators': '_,_',
+      \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+      \	'separately': {
+      \		'tex': {
+      \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/'],
+      \		},
+      \		'vim': {
+      \			'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/ fold', 'start=/(/ end=/)/ containedin=vimFuncBody', 'start=/\[/ end=/\]/ containedin=vimFuncBody', 'start=/{/ end=/}/ fold containedin=vimFuncBody'],
+      \		},
+      \		'html': {
+      \			'parentheses': ['start=/\v\<((area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)[ >])@!\z([-_:a-zA-Z0-9]+)(\s+[-_:a-zA-Z0-9]+(\=("[^"]*"|'."'".'[^'."'".']*'."'".'|[^ '."'".'"><=`]*))?)*\>/ end=#</\z1># fold'],
+      \		},
+      \		'css': 0,
+      \	}
+      \}
 
 
 """"""""""" LINT: Disable other C linters, too slow:
 
 let g:ale_linters      = {
-			\   'c': ['clang'],
-			\}
+      \   'c': ['clang'],
+      \   'js': ['eslint'],
+      \   'javascript': ['eslint'],
+      \   'clojure': ['joker --lint'],
+      \}
 let g:ale_sign_error   = '✘'
 let g:ale_sign_warning = '⚠'
 
 
 """"""""""" CamelCase, replace e w b:
 
-map <silent>w <Plug>CamelCaseMotion_w
-map <silent>b <Plug>CamelCaseMotion_b
-map <silent>e <Plug>CamelCaseMotion_e
-sunmap w
-sunmap b
-sunmap e
+"map <silent>w <Plug>CamelCaseMotion_w
+"map <silent>b <Plug>CamelCaseMotion_b
+"map <silent>e <Plug>CamelCaseMotion_e
+"sunmap w
+"sunmap b
+"sunmap e
 
-omap <silent>iw <Plug>CamelCaseMotion_iw
-xmap <silent>iw <Plug>CamelCaseMotion_iw
-omap <silent>ib <Plug>CamelCaseMotion_ib
-xmap <silent>ib <Plug>CamelCaseMotion_ib
-omap <silent>ie <Plug>CamelCaseMotion_ie
-xmap <silent>ie <Plug>CamelCaseMotion_ie
+"omap <silent>iw <Plug>CamelCaseMotion_iw
+"xmap <silent>iw <Plug>CamelCaseMotion_iw
+"omap <silent>ib <Plug>CamelCaseMotion_ib
+"xmap <silent>ib <Plug>CamelCaseMotion_ib
+"omap <silent>ie <Plug>CamelCaseMotion_ie
+"xmap <silent>ie <Plug>CamelCaseMotion_ie
 
 
 """"""""""" Airline
@@ -305,18 +378,18 @@ nmap " <Plug>SneakBackward
 """"""""""" Cscope:
 
 if has("cscope")
-	set csprg=/usr/bin/cscope
-	set csto=0
-	set cst
-	set nocsverb
-	" add any database in current directory
-	if filereadable("cscope.out")
-		cs add cscope.out
-		" else add database pointed to by environment
-	elseif $CSCOPE_DB != ""
-		cs add $CSCOPE_DB
-	endif
-	set csverb
+  set csprg=/usr/bin/cscope
+  set csto=0
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+    cs add cscope.out
+    " else add database pointed to by environment
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+  set csverb
 endif
 
 
@@ -327,83 +400,122 @@ endif
 syntax keyword Comment SAFE_CALL
 syntax keyword cTodo contained TODO FIXME XXX todo fixme xxx
 
+augroup fixme
+  au!
+  au BufNewFile,BufRead * syn match myTodo contained "\(todo\|fixme\):"
+  au BufNewFile,BufRead * hi def link myTodo Todo
+augroup END
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " lang depended
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""" haskell:
+"let g:haskell_indent_disable = 1
+
 """"""""""" clojure:
 
-let g:deoplete#keyword_patterns         = {}
-let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+let g:deoplete#auto_completion_start_length = 1
+let g:deoplete#enable_smart_case            = 1
+let g:deoplete#keyword_patterns             = {}
+let g:deoplete#keyword_patterns.clojure     = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
-let g:clojure_maxlines              = 1000
-let g:clojure_special_indent_words  = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^go-loop']
+" jjlet g:clojure_maxlines              = 1000
+" jjlet g:clojure_special_indent_words  = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
+" jjlet g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^go-loop']
 
-let g:parinfer_mode                 = "paren"
-let g:parinfer_airline_integration  = 0
-let g:parinfer_shift_norm_right_map = '<space>>'
-let g:parinfer_shift_norm_left_map  = '<space><'
-let g:parinfer_shift_vis_right_map  = 'g>'
-let g:parinfer_shift_vis_left_map   = 'g<'
+let g:parinfer_mode                 = "off"
+" let g:parinfer_airline_integration  = 0
+" let g:parinfer_shift_norm_right_map = '<space>>'
+" let g:parinfer_shift_norm_left_map  = '<space><'
+" let g:parinfer_shift_vis_right_map  = 'g>'
+" let g:parinfer_shift_vis_left_map   = 'g<'
 
 "let mapleader = ''
 "let maplocalleader = ''
 let mapleader      = "\<cr>"
 let maplocalleader = "\<cr>"
+" syntax/color only:
+let g:clojure_syntax_keywords = {  
+      \ 'clojureSpecial': ["alet", "glet"]
+      \ }
 
+let g:paredit_shortmaps = 0
+let g:paredit_shortmaps = 0
+let g:paredit_electric_return = 0
+let g:paredit_smartjump = 0
+let g:paredit_matchlines = 100
+let g:paredit_leader = 'gaoeuaoeu'
+
+let g:clojure_fuzzy_indent = 1
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^select', '^sql/insert']
+
+let g:sexp_enable_insert_mode_mappings = 0
 let g:sexp_insert_after_wrap = 1
 " most are unchanged, but keep this for reference
-let g:sexp_mappings = {
-			\ 'sexp_move_to_prev_top_element':  '[[',
-			\ 'sexp_move_to_next_top_element':  ']]',
-			\ 'sexp_select_prev_element':       '[e',
-			\ 'sexp_select_next_element':       ']e',
-			\ 'sexp_indent':                    '==',
-			\ 'sexp_indent_top':                '=-',
-			\ 'sexp_round_head_wrap_list':      '<LocalLeader>I',
-			\ 'sexp_round_tail_wrap_list':      '<LocalLeader>A',
-			\ 'sexp_round_head_wrap_element':   '<LocalLeader>i',
-			\ 'sexp_round_tail_wrap_element':   '<LocalLeader>a',
-			\ 'sexp_insert_at_list_head':       '<LocalLeader>gi',
-			\ 'sexp_insert_at_list_tail':       '<LocalLeader>ga',
-			\ 'sexp_square_head_wrap_list':     '<LocalLeader>#[',
-			\ 'sexp_square_tail_wrap_list':     '<LocalLeader>#]',
-			\ 'sexp_curly_head_wrap_list':      '<LocalLeader>#{',
-			\ 'sexp_curly_tail_wrap_list':      '<LocalLeader>#}',
-			\ 'sexp_square_head_wrap_element':  '<LocalLeader>[',
-			\ 'sexp_square_tail_wrap_element':  '<LocalLeader>]',
-			\ 'sexp_curly_head_wrap_element':   '<LocalLeader>{',
-			\ 'sexp_curly_tail_wrap_element':   '<LocalLeader>}',
-			\ 'sexp_splice_list':               '<LocalLeader>s',
-			\ 'sexp_raise_list':                '<LocalLeader>r',
-			\ 'sexp_raise_element':             '<LocalLeader>R',
-			\ 'sexp_swap_list_backward':        '<LocalLeader><',
-			\ 'sexp_swap_list_forward':         '<LocalLeader>>',
-			\ 'sexp_swap_element_backward':     '<',
-			\ 'sexp_swap_element_forward':      '>',
-			\ 'sexp_emit_head_element':         '<LocalLeader>L',
-			\ 'sexp_emit_tail_element':         '<LocalLeader>H',
-			\ 'sexp_capture_prev_element':      '<LocalLeader>h',
-			\ 'sexp_capture_next_element':      '<LocalLeader>l',
-			\ }
+"let g:sexp_mappings = {
+"			\ 'sexp_move_to_prev_top_element':  '[[',
+"			\ 'sexp_move_to_next_top_element':  ']]',
+"			\ 'sexp_select_prev_element':       '[e',
+"			\ 'sexp_select_next_element':       ']e',
+"			\ 'sexp_indent':                    '=-',
+"			\ 'sexp_indent_top':                '==',
+"			\ 'sexp_round_head_wrap_list':      '<LocalLeader>I',
+"			\ 'sexp_round_tail_wrap_list':      '<LocalLeader>A',
+"			\ 'sexp_round_head_wrap_element':   '<LocalLeader>i',
+"			\ 'sexp_round_tail_wrap_element':   '<LocalLeader>a',
+"			\ 'sexp_insert_at_list_head':       '<LocalLeader>gi',
+"			\ 'sexp_insert_at_list_tail':       '<LocalLeader>ga',
+"			\ 'sexp_square_head_wrap_list':     '<LocalLeader>#[',
+"			\ 'sexp_square_tail_wrap_list':     '<LocalLeader>#]',
+"			\ 'sexp_curly_head_wrap_list':      '<LocalLeader>#{',
+"			\ 'sexp_curly_tail_wrap_list':      '<LocalLeader>#}',
+"			\ 'sexp_square_head_wrap_element':  '<LocalLeader>[',
+"			\ 'sexp_square_tail_wrap_element':  '<LocalLeader>]',
+"			\ 'sexp_curly_head_wrap_element':   '<LocalLeader>{',
+"			\ 'sexp_curly_tail_wrap_element':   '<LocalLeader>}',
+"			\ 'sexp_splice_list':               '<LocalLeader>s',
+"			\ 'sexp_raise_list':                '<LocalLeader>r',
+"			\ 'sexp_raise_element':             '<LocalLeader>R',
+"			\ 'sexp_swap_list_backward':        '<LocalLeader><',
+"			\ 'sexp_swap_list_forward':         '<LocalLeader>>',
+"			\ 'sexp_swap_element_backward':     '<',
+"			\ 'sexp_swap_element_forward':      '>',
+"			\ 'sexp_emit_head_element':         '<LocalLeader>L',
+"			\ 'sexp_emit_tail_element':         '<LocalLeader>H',
+"			\ 'sexp_capture_prev_element':      '<LocalLeader>h',
+"			\ 'sexp_capture_next_element':      '<LocalLeader>l',
+"			\ }
 
+
+" might keep this everywhere? otherwise add to augroup and add <buffer>
+map <silent> & :let old = @/<cr>/[([{]/<cr>:call histdel('/', -1)<cr>:let @/ = old<cr>--
 " cljs
-augroup Clojure
-	au!
-	au BufNewFile,BufRead *.cljs set filetype=clojure
+augroup Cl
+  au!
+  "au BufNewFile,BufRead *.cljs,*cljx set filetype=clojure
+  " this is tmp until parinfer fixes slurping:
+  au FileType clojure noremap <buffer> <Right> >>
+  au FileType clojure noremap <buffer> <Left> <<
+  "au BufNewFile,BufRead *.cljs,*cljx,*clj "map cP [[cpp
+  " FIXME easy solution for shadow:
+  au BufNewFile,BufRead *.cljs,*cljx,*clj Piggieback :main 
+  au FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}', '"':'"'}
+  "au BufNewFile,BufRead *.cljs,*cljx,*clj \
+  "au TextChanged * call sexp#indent(0, v:count)
 augroup END
 
 
 """"""""""" scala
 
 augroup Scala
-	au!
-	au BufWritePost *.scala silent :EnTypeCheck
-	au FileType scala nnoremap <cr>d :EnDeclaration<CR>
-	au FileType scala nnoremap <cr>t :EnType<CR>
-	au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
+  au!
+  au BufWritePost *.scala silent :EnTypeCheck
+  au FileType scala nnoremap <cr>d :EnDeclaration<CR>
+  au FileType scala nnoremap <cr>t :EnType<CR>
+  au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
 augroup END
 
 let g:deoplete#sources                   = {}
@@ -451,17 +563,20 @@ nmap <silent> <Space>C <Plug>(jsdoc)
 "nmap <silent> <Space>g :YcmCompleter GoTo<CR>
 nmap <silent> <Space>a :s/\vfunction\s+([0-9a-zA-Z_]+)\s*(\(.*\))\s*\{/const \1 = \2 => {/<CR>--
 nmap <silent> <Space>A :s/\vconst\s+([0-9a-zA-Z_]+)\s*\=\s*(\(.*\))\s*\=\>\s*\{/function \1\2 {/<CR>--
-set indentkeys+=',.,?,<:>,&,|'
+"set indentkeys+=',.,?,<:>,&,|'
 let g:javascript_plugin_jsdoc = 1
 let g:jsdoc_allow_input_prompt = 1
 " for ul coding style:
 let g:javascript_opfirst = '\C\%([<>=,?^%|/&]\|\([-:+]\)\1\@!\|\*\+\|!=\|in\%(stanceof\)\=\>\)'
                             "'\C\%([<>=,.?^%|/&]\|\([-:+]\)\1\@!\|\*\+\|!=\|in\%(stanceof\)\=\>\)'
 
-augroup javascript
-        autocmd FileType javascript syntax clear jsFuncBlock
-        "autocmd FileType javascript set cino=(0,W2
-augroup END
+"augroup javascript
+"        au!
+"        call AutoPairsToggle()
+"        call AutoPairsToggle()
+"        "autocmd FileType javascript syntax clear jsFuncBlock
+"        "autocmd FileType javascript set cino=(0,W2
+"augroup END
 
 "Add extra filetypes
 let g:deoplete#sources#ternjs#filetypes = [
@@ -485,13 +600,14 @@ let g:deoplete#sources#ternjs#omit_object_prototype = 0
 augroup Binary
 	au!
 	au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
-	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+        au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
 	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
 	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
 	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
 	au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
 	au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
 augroup END
+
 au BufNewFile,BufRead *todo,*TODO		set ft=wtodo
 au BufNewFile,BufRead *.muttrc		set ft=muttrc
 
@@ -508,7 +624,7 @@ endif
 " Sub conf
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-source ~/.vim/fzf_cscope.vim
+"source ~/.vim/fzf_cscope.vim
 source ~/.vim/mappings.vim
 source ~/.vim/headers.vim
 source ~/.vim/fun.vim

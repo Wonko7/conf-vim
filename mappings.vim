@@ -8,11 +8,15 @@ if &diff
 endif
 
 " FZF also see tags. :lines maybe..
-map <SPACE><SPACE> :Buffers<RETURN>
-map <SPACE>o :History<RETURN>
-map <SPACE>f :Files<RETURN>
+map <SPACE><SPACE> :Denite buffer<RETURN>
+map <SPACE>f :Denite file_mru<RETURN>
+map <SPACE>o :DeniteProjectDir file/rec/git file/rec buffer<RETURN>
+        "\ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
+"map <SPACE>f :Denite file/rec/git file/rec buffer<RETURN>
+"map <SPACE>f :Files<RETURN>
 " map <SPACE>c :Commits<RETURN>
 " map <SPACE>C :BCommits<RETURN>
+"map <SPACE>f :Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
 map <SPACE>gf :GFiles<RETURN>
 map <SPACE>R :Rg<SPACE>
 map <SPACE>r :call RgCurrentWord()<cr>
@@ -27,6 +31,7 @@ imap <C-l> <C-x><C-l>
 map Q q
 
 map <C-k> :bw<CR>
+map <C-K><C-K> :bw!<CR>
 
 map <SPACE>k <C-w><up>
 map <SPACE>j <C-w><down>
@@ -36,11 +41,14 @@ map + <C-w>>
 
 map -d :%s/\v\s*$//<RETURN>``<ESC>:noh<RETURN>
 map -u yypVr=
-map -- <ESC>:noh<RETURN>
+map -- <ESC>:noh<RETURN>:set nopaste<RETURN>
 imap jj <Esc>
 imap ,, <Esc>
-cmap w!! %!sudo tee > /dev/null %<RETURN>
-cmap ww %!sudo tee > /dev/null %<RETURN>
+" how the fuck did I not know about sudoedit??
+" cmap w!! :w suda:///%<RETURN>
+cmap ww :w!<RETURN>
+" cmap ee :e suda:///%<RETURN>
+
 cmap cwd lcd %:p:h
 cmap :S %s/\v
 vmap / y/<C-R>"<CR>

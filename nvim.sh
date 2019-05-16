@@ -6,8 +6,6 @@
 VIM_SERVER=nvim_`wmctrl -d | sed -nre "/\*/ s/^([0-9]+).*/\1/p"`
 SOCKET_PREFIX=/tmp/nvimsockets
 nvr_cmd="nvr -s --servername $SOCKET_PREFIX/$VIM_SERVER $@"
-# avoid grabbing st from local node_modules... *sigh* do something cleaner about this.
-PATH=/usr/bin:/bin
 
 mkdir -p $SOCKET_PREFIX
 if nvr --serverlist | egrep -q "^$SOCKET_PREFIX/$VIM_SERVER\$"; then
