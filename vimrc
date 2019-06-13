@@ -9,10 +9,10 @@ set showtabline=0
 set runtimepath+=",~/conf/vim/"
 
 if &t_Co > 2 || has("gui_running")
-	syntax on
-	set hlsearch
-	autocmd GUIEnter * set vb t_vb=
-	set noerrorbells
+  syntax on
+  set hlsearch
+  autocmd GUIEnter * set vb t_vb=
+  set noerrorbells
 endif
 
 set vb t_vb=
@@ -51,6 +51,8 @@ Plug 'kopischke/vim-fetch'
 " cxiw mark word to exchange:
 Plug 'tommcdo/vim-exchange'
 " col align: gl<motion> or v<motions><enter>:
+" used to remember place before substitute: :KeepView
+Plug 'vim-scripts/anwolib'
 Plug 'junegunn/vim-easy-align'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -58,6 +60,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vividchalk'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-abolish'
+
 Plug 'Yggdroot/indentLine'
 
 "Plug 'Valloric/YouCompleteMe'
@@ -150,8 +154,7 @@ Plug 'tpope/vim-fireplace'
 "Plug 'tpope/vim-dispatch'
 Plug 'guns/vim-clojure-static'
 Plug 'guns/vim-sexp'
-" FIXME: use my fork:
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'wonko7/vim-sexp-mappings-for-regular-people'
 Plug 'guns/vim-slamhound'
 Plug 'vim-scripts/paredit.vim'
 
@@ -238,13 +241,18 @@ vmap <space>  <cr><space><cr>
 " align % on space.. omg... this got out of hand real fast:
 "nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
 nmap gl i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%
-nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%:ParinferOn<cr>
+"  jjnmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%:ParinferOn<cr>
+
+nmap gH :let old = @/<cr>?:require<cr>^%i<cr><esc>mr%jml/\v\s*;;\s*$<cr>kV`l:sort<cr>njV`rk:sort<cr>V)<cr><space>kJ:call histdel('/', -1)<cr>--:let @/ = old<cr>
+
+map <silent> & :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
 
 """"""""""" git
 
 " hl for git gutter
 let g:gitgutter_max_signs = 2000
 highlight clear SignColumn
+let g:gitgutter_map_keys = 0
 
 
 """"""""""" Denite:
@@ -270,11 +278,11 @@ call denite#custom#map(
 """"""""""" rg for fzf
 
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 
 function! RgCurrentWord()
   let l:dir = system('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel ' . expand('%:p') . ' | head -n 1')
@@ -321,14 +329,20 @@ let g:rainbow_conf = {
 
 """"""""""" LINT: Disable other C linters, too slow:
 
+let g:ale_fixers = {
+      \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \}
+
 let g:ale_linters      = {
       \   'c': ['clang'],
       \   'js': ['eslint'],
       \   'javascript': ['eslint'],
-      \   'clojure': ['joker --lint'],
+      \   'clojure': ['joker'],
       \}
+
 let g:ale_sign_error   = '✘'
 let g:ale_sign_warning = '⚠'
+let g:ale_fix_on_save = 1
 
 
 """"""""""" CamelCase, replace e w b:
@@ -351,7 +365,7 @@ let g:ale_sign_warning = '⚠'
 """"""""""" Airline
 
 if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 
 let g:airline_powerline_fonts = 1
@@ -438,8 +452,8 @@ let g:parinfer_mode                 = "off"
 let mapleader      = "\<cr>"
 let maplocalleader = "\<cr>"
 " syntax/color only:
-let g:clojure_syntax_keywords = {  
-      \ 'clojureSpecial': ["alet", "glet"]
+let g:clojure_syntax_keywords = {
+      \ 'clojureSpecial': ["alet", "glet", "defn-spec"]
       \ }
 
 let g:paredit_shortmaps = 0
@@ -450,7 +464,7 @@ let g:paredit_matchlines = 100
 let g:paredit_leader = 'gaoeuaoeu'
 
 let g:clojure_fuzzy_indent = 1
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^select', '^sql/insert']
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def',  '^match', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^select', '^update', '^insert', '^delete', '^defn-spec']
 
 let g:sexp_enable_insert_mode_mappings = 0
 let g:sexp_insert_after_wrap = 1
@@ -491,20 +505,36 @@ let g:sexp_insert_after_wrap = 1
 
 
 " might keep this everywhere? otherwise add to augroup and add <buffer>
-map <silent> & :let old = @/<cr>/[([{]/<cr>:call histdel('/', -1)<cr>:let @/ = old<cr>--
+map <silent> \| :let old = @/<cr>/[([{]/<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
+map <silent> & :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
+
+map <silent> & :let old = @/<cr>/[([{]/<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
+map <silent> é :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
+
+
+" FIXME: should I?? if this sticks put it in mappings.
+map gj :let old = @/<cr>:s/\s*\n\s*//<cr>:call histdel('/', -1)<cr>:let @/ = old<cr>--
+" FIXME broken with dot, sigh:
+
+function! MyPiggie()
+  Connect nrepl://localhost:9999
+  Piggieback :main
+endfunction
 " cljs
-augroup Cl
-  au!
+augroup Clau!
   "au BufNewFile,BufRead *.cljs,*cljx set filetype=clojure
   " this is tmp until parinfer fixes slurping:
   au FileType clojure noremap <buffer> <Right> >>
   au FileType clojure noremap <buffer> <Left> <<
+  " FIXME: might use this everywher:
+  "au FileType clojure noremap <buffer> J :let old = @/<cr>s/\s*\n\s*//<cr>:call histdel('/', -1)<cr>:let @/ = old<cr>--
   "au BufNewFile,BufRead *.cljs,*cljx,*clj "map cP [[cpp
   " FIXME easy solution for shadow:
-  au BufNewFile,BufRead *.cljs,*cljx,*clj Piggieback :main 
+  "au BufNewFile,BufRead *.cljs,*cljx,*clj silent :Connect nrepl://localhost:9999
+  "au BufNewFile,BufRead *.cljs,*cljx,*clj silent :Piggieback :main
   au FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}', '"':'"'}
   "au BufNewFile,BufRead *.cljs,*cljx,*clj \
-  "au TextChanged * call sexp#indent(0, v:count)
+  "  au TextChanged * call sexp#indent(0, v:count)
 augroup END
 
 
@@ -513,9 +543,9 @@ augroup END
 augroup Scala
   au!
   au BufWritePost *.scala silent :EnTypeCheck
-  au FileType scala nnoremap <cr>d :EnDeclaration<CR>
-  au FileType scala nnoremap <cr>t :EnType<CR>
-  au FileType scala nnoremap <cr>C :EnTypeCheck<CR>
+  au FileType scala nnoremap <buffer> <cr>d :EnDeclaration<CR>
+  au FileType scala nnoremap <buffer> <cr>t :EnType<CR>
+  au FileType scala nnoremap <buffer> <cr>C :EnTypeCheck<CR>
 augroup END
 
 let g:deoplete#sources                   = {}
