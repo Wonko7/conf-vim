@@ -156,7 +156,8 @@ Plug 'guns/vim-clojure-static'
 Plug 'guns/vim-sexp'
 Plug 'wonko7/vim-sexp-mappings-for-regular-people'
 Plug 'guns/vim-slamhound'
-Plug 'vim-scripts/paredit.vim'
+Plug 'kovisoft/paredit'
+"Plug 'vim-scripts/paredit.vim'
 
 call plug#end()
 
@@ -238,14 +239,6 @@ nmap g<space> Vip<cr> <cr>--
 nmap g*       Vip<cr>* <cr>--
 vmap =        <cr>=<cr>
 vmap <space>  <cr><space><cr>
-" align % on space.. omg... this got out of hand real fast:
-"nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
-nmap gl i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%
-"  jjnmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%:ParinferOn<cr>
-
-nmap gH :let old = @/<cr>?:require<cr>^%i<cr><esc>mr%jml/\v\s*;;\s*$<cr>kV`l:sort<cr>njV`rk:sort<cr>V)<cr><space>kJ:call histdel('/', -1)<cr>--:let @/ = old<cr>
-
-map <silent> & :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
 
 """"""""""" git
 
@@ -468,49 +461,21 @@ let g:clojure_fuzzy_indent_patterns = ['^with', '^def',  '^match', '^let', '^gle
 
 let g:sexp_enable_insert_mode_mappings = 0
 let g:sexp_insert_after_wrap = 1
-" most are unchanged, but keep this for reference
-"let g:sexp_mappings = {
-"			\ 'sexp_move_to_prev_top_element':  '[[',
-"			\ 'sexp_move_to_next_top_element':  ']]',
-"			\ 'sexp_select_prev_element':       '[e',
-"			\ 'sexp_select_next_element':       ']e',
-"			\ 'sexp_indent':                    '=-',
-"			\ 'sexp_indent_top':                '==',
-"			\ 'sexp_round_head_wrap_list':      '<LocalLeader>I',
-"			\ 'sexp_round_tail_wrap_list':      '<LocalLeader>A',
-"			\ 'sexp_round_head_wrap_element':   '<LocalLeader>i',
-"			\ 'sexp_round_tail_wrap_element':   '<LocalLeader>a',
-"			\ 'sexp_insert_at_list_head':       '<LocalLeader>gi',
-"			\ 'sexp_insert_at_list_tail':       '<LocalLeader>ga',
-"			\ 'sexp_square_head_wrap_list':     '<LocalLeader>#[',
-"			\ 'sexp_square_tail_wrap_list':     '<LocalLeader>#]',
-"			\ 'sexp_curly_head_wrap_list':      '<LocalLeader>#{',
-"			\ 'sexp_curly_tail_wrap_list':      '<LocalLeader>#}',
-"			\ 'sexp_square_head_wrap_element':  '<LocalLeader>[',
-"			\ 'sexp_square_tail_wrap_element':  '<LocalLeader>]',
-"			\ 'sexp_curly_head_wrap_element':   '<LocalLeader>{',
-"			\ 'sexp_curly_tail_wrap_element':   '<LocalLeader>}',
-"			\ 'sexp_splice_list':               '<LocalLeader>s',
-"			\ 'sexp_raise_list':                '<LocalLeader>r',
-"			\ 'sexp_raise_element':             '<LocalLeader>R',
-"			\ 'sexp_swap_list_backward':        '<LocalLeader><',
-"			\ 'sexp_swap_list_forward':         '<LocalLeader>>',
-"			\ 'sexp_swap_element_backward':     '<',
-"			\ 'sexp_swap_element_forward':      '>',
-"			\ 'sexp_emit_head_element':         '<LocalLeader>L',
-"			\ 'sexp_emit_tail_element':         '<LocalLeader>H',
-"			\ 'sexp_capture_prev_element':      '<LocalLeader>h',
-"			\ 'sexp_capture_next_element':      '<LocalLeader>l',
-"			\ }
-
 
 " might keep this everywhere? otherwise add to augroup and add <buffer>
-map <silent> \| :let old = @/<cr>/[([{]/<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
-map <silent> & :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
+"map <silent> \| :let old = @/<cr>/[([{]/<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
+"map <silent> & :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
 
 map <silent> & :let old = @/<cr>/[([{]/<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
 map <silent> é :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ = old<cr>
 
+" align % on space.. omg... this got out of hand real fast:
+"nmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddk:ParinferToggleMode<cr>:ParinferToggleMode<cr>J=%
+"  jjnmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%:ParinferOn<cr>
+nmap gl i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%
+
+nmap gH :let old = @/<cr>?:require<cr>^%i<cr><esc>mr%jml/\v\s*;;\s*$<cr>kV`l:sort<cr>njV`rk:sort<cr>V)<cr><space>kJ:call histdel('/', -1)<cr>--:let @/ = old<cr>
+map <c-g> <Plug>FireplaceDjump
 
 " FIXME: should I?? if this sticks put it in mappings.
 map gj :let old = @/<cr>:s/\s*\n\s*//<cr>:call histdel('/', -1)<cr>:let @/ = old<cr>--
