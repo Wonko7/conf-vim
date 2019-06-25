@@ -153,9 +153,8 @@ Plug 'tpope/vim-fireplace'
 "Plug 'tpope/vim-salve'
 "Plug 'tpope/vim-dispatch'
 Plug 'guns/vim-clojure-static'
-Plug 'guns/vim-sexp'
 Plug 'wonko7/vim-sexp-mappings-for-regular-people'
-Plug 'guns/vim-slamhound'
+Plug 'guns/vim-sexp'
 Plug 'kovisoft/paredit'
 "Plug 'vim-scripts/paredit.vim'
 
@@ -233,7 +232,6 @@ let g:indentLine_char = '▏'
 """"""""""" align cols:
 
 vmap <Enter> <Plug>(EasyAlign)
-nmap gl <Plug>(EasyAlign)
 nmap g= Vip:EasyAlign /[-+*~^.:!<>]\?=>\?/<cr>--
 nmap g<space> Vip<cr> <cr>--
 nmap g*       Vip<cr>* <cr>--
@@ -433,7 +431,7 @@ let g:deoplete#keyword_patterns.clojure     = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 " jjlet g:clojure_special_indent_words  = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
 " jjlet g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^go-loop']
 
-let g:parinfer_mode                 = "off"
+"let g:parinfer_mode                 = "off"
 " let g:parinfer_airline_integration  = 0
 " let g:parinfer_shift_norm_right_map = '<space>>'
 " let g:parinfer_shift_norm_left_map  = '<space><'
@@ -449,6 +447,7 @@ let g:clojure_syntax_keywords = {
       \ 'clojureSpecial': ["alet", "glet", "defn-spec"]
       \ }
 
+"let g:paredit_mode = 0
 let g:paredit_shortmaps = 0
 let g:paredit_shortmaps = 0
 let g:paredit_electric_return = 0
@@ -479,27 +478,17 @@ map <c-g> <Plug>FireplaceDjump
 
 " FIXME: should I?? if this sticks put it in mappings.
 map gj :let old = @/<cr>:s/\s*\n\s*//<cr>:call histdel('/', -1)<cr>:let @/ = old<cr>--
-" FIXME broken with dot, sigh:
 
 function! MyPiggie()
   Connect nrepl://localhost:9999
   Piggieback :main
 endfunction
 " cljs
-augroup Clau!
-  "au BufNewFile,BufRead *.cljs,*cljx set filetype=clojure
+augroup Clojure
   " this is tmp until parinfer fixes slurping:
   au FileType clojure noremap <buffer> <Right> >>
   au FileType clojure noremap <buffer> <Left> <<
-  " FIXME: might use this everywher:
-  "au FileType clojure noremap <buffer> J :let old = @/<cr>s/\s*\n\s*//<cr>:call histdel('/', -1)<cr>:let @/ = old<cr>--
-  "au BufNewFile,BufRead *.cljs,*cljx,*clj "map cP [[cpp
-  " FIXME easy solution for shadow:
-  "au BufNewFile,BufRead *.cljs,*cljx,*clj silent :Connect nrepl://localhost:9999
-  "au BufNewFile,BufRead *.cljs,*cljx,*clj silent :Piggieback :main
   au FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}', '"':'"'}
-  "au BufNewFile,BufRead *.cljs,*cljx,*clj \
-  "  au TextChanged * call sexp#indent(0, v:count)
 augroup END
 
 
