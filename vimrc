@@ -7,6 +7,7 @@ set ruler				" show the cursor position all the time
 set showcmd				" display incomplete commands
 set showtabline=0
 set runtimepath+=",~/conf/vim/"
+set lazyredraw
 
 if &t_Co > 2 || has("gui_running")
   syntax on
@@ -456,7 +457,7 @@ let g:paredit_matchlines = 100
 let g:paredit_leader = 'gaoeuaoeu'
 
 let g:clojure_fuzzy_indent = 1
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def',  '^match', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^select', '^update', '^insert', '^delete', '^defn-spec']
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def',  '^match', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^select', '^update', '^insert', '^delete', '^defn-spec', '^async']
 
 let g:sexp_enable_insert_mode_mappings = 0
 let g:sexp_insert_after_wrap = 1
@@ -473,7 +474,7 @@ map <silent> é :let old = @/<cr>?[([{]<cr>:call histdel('/', -1)<cr>--:let @/ =
 "  jjnmap gL :ParinferOff<cr>i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%:ParinferOn<cr>
 nmap gl i<cr>;;<cr><esc>k^d0j=%%v%:EasyAlign v/\v^\s{5,}/<cr>1 kddkJ=%
 
-nmap gH :let old = @/<cr>?:require<cr>^%i<cr><esc>mr%jml/\v\s*;;\s*$<cr>kV`l:sort<cr>njV`rk:sort<cr>V)<cr><space>kJ:call histdel('/', -1)<cr>--:let @/ = old<cr>
+nmap gH :let old = @/<cr>gg/:require<cr>^%i<cr><esc>mr%jml/\v\s*;;\s*$<cr>kV`l:sort<cr>njV`rk:sort<cr>V)<cr><space>kJ:call histdel('/', -1)<cr>--:let @/ = old<cr>
 map <c-g> <Plug>FireplaceDjump
 
 " FIXME: should I?? if this sticks put it in mappings.
