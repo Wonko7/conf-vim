@@ -249,22 +249,43 @@ let g:gitgutter_map_keys = 0
 
 """"""""""" Denite:
 
+call denite#custom#option('default', { 'start_filter': 1})
 call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 call denite#custom#var('file/rec/git', 'command',
       \ ['git', 'ls-files', '-co', '--exclude-standard'])
 call denite#custom#option('default', 'prompt', '>')
 
-call denite#custom#map(
-      \ 'insert',
-      \ '<down>',
-      \ '<denite:move_to_next_line>',
-      \ 'noremap'
-      \)
-call denite#custom#map(
-      \ 'insert',
-      \ '<up>',
-      \ '<denite:move_to_previous_line>',
-      \ 'noremap')
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('toggle_select').'j'
+  nnoremap <silent><buffer><expr> <up>
+  \ denite#do_map('move_to_previous_line')
+  nnoremap <silent><buffer><expr> <down>
+  \ denite#do_map('move_to_next_line')
+endfunction
+
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
+call denite#custom#map('insert', '<up>', '<denite:move_to_previous_line>', 'noremap')
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<down>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<esc>', '<denite:quit>', 'noremap')
+call denite#custom#map('insert', '<cr>', '<denite:do_action>', 'noremap')
+"call denite#custom#map('normal', '<cr>', '<denite:filter_update>', 'noremap')
+call denite#custom#map('insert', '<C-o>', '<denite:filter_update>', 'noremap')
+call denite#custom#map('insert', '<C-g>', '<denite:filter_update>', 'noremap')
+call denite#custom#map('normal', '<C-g>', '<denite:filter_update>', 'noremap')
 
 
 """"""""""" rg for fzf
@@ -441,8 +462,8 @@ let g:deoplete#keyword_patterns.clojure     = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 "let mapleader = ''
 "let maplocalleader = ''
-let mapleader      = "\<cr>"
-let maplocalleader = "\<cr>"
+let mapleader      = "\\"
+
 " syntax/color only:
 let g:clojure_syntax_keywords = {
       \ 'clojureSpecial': ["alet", "glet", "defn-spec"]
