@@ -275,7 +275,7 @@ function! s:denite_my_settings()
   nnoremap <silent><buffer><expr> <down>
   \ denite#do_map('move_to_next_line')
   imap <buffer> <cr> i_<Plug>(denite_filter_update)
-  imap <buffer> <esc> i_<Plug>(denite_filter_quit)
+  imap <buffer> <c-q> i_<Plug>(denite_filter_quit)
 endfunction
 
 
