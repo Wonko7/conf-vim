@@ -249,15 +249,15 @@ let g:gitgutter_map_keys = 0
 
 """"""""""" Denite:
 
-call denite#custom#option('default', { 'start_filter': 1})
-call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-call denite#custom#var('file/rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
-call denite#custom#option('default', 'prompt', '>')
+"call denite#custom#option('default', { 'start_filter': 1})
+"call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+"call denite#custom#var('file/rec/git', 'command',
+"      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+"call denite#custom#option('default', 'prompt', '>')
 
 " Define mappings
 autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
+function! s:denite_my_settings()
   nnoremap <silent><buffer><expr> <CR>
   \ denite#do_map('do_action')
   nnoremap <silent><buffer><expr> d
@@ -274,18 +274,9 @@ function! s:denite_my_settings() abort
   \ denite#do_map('move_to_previous_line')
   nnoremap <silent><buffer><expr> <down>
   \ denite#do_map('move_to_next_line')
+  imap <buffer> <cr> i_<Plug>(denite_filter_update)
+  imap <buffer> <esc> i_<Plug>(denite_filter_quit)
 endfunction
-
-call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<up>', '<denite:move_to_previous_line>', 'noremap')
-call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<down>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<esc>', '<denite:quit>', 'noremap')
-call denite#custom#map('insert', '<cr>', '<denite:do_action>', 'noremap')
-"call denite#custom#map('normal', '<cr>', '<denite:filter_update>', 'noremap')
-call denite#custom#map('insert', '<C-o>', '<denite:filter_update>', 'noremap')
-call denite#custom#map('insert', '<C-g>', '<denite:filter_update>', 'noremap')
-call denite#custom#map('normal', '<C-g>', '<denite:filter_update>', 'noremap')
 
 
 """"""""""" rg for fzf
