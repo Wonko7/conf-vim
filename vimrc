@@ -207,13 +207,16 @@ set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr
 
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
-let g:deoplete#enable_at_startup           = 1
+let g:deoplete#enable_at_startup           = 0
 let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/7/lib64/libclang.so'
 let g:SuperTabDefaultCompletionType        = "<c-n>"
 
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
+
+let g:deoplete#ignore_sources = {}
+let g:deoplete#ignore_sources._ = ['buffer', 'around']
 
 " ncm2
 
@@ -249,11 +252,11 @@ let g:gitgutter_map_keys = 0
 
 """"""""""" Denite:
 
-"call denite#custom#option('default', { 'start_filter': 1})
-"call denite#custom#alias('source', 'file/rec/git', 'file/rec')
-"call denite#custom#var('file/rec/git', 'command',
-"      \ ['git', 'ls-files', '-co', '--exclude-standard'])
-"call denite#custom#option('default', 'prompt', '>')
+call denite#custom#option('default', { 'start_filter': 1})
+call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+call denite#custom#var('file/rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+call denite#custom#option('default', 'prompt', '>')
 
 " Define mappings
 autocmd FileType denite call s:denite_my_settings()
@@ -274,10 +277,33 @@ function! s:denite_my_settings()
   \ denite#do_map('move_to_previous_line')
   nnoremap <silent><buffer><expr> <down>
   \ denite#do_map('move_to_next_line')
-  imap <buffer> <cr> i_<Plug>(denite_filter_update)
-  imap <buffer> <c-q> i_<Plug>(denite_filter_quit)
 endfunction
 
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+    imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
+    inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+    inoremap <silent><buffer><expr> <c-v>
+                \ denite#do_map('do_action', 'vsplit')
+    inoremap <silent><buffer><expr> <esc>
+                \ denite#do_map('quit')
+    inoremap <silent><buffer> <C-j>
+                \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+    inoremap <silent><buffer> <C-k>
+                \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+endfunction
+
+"" "nnoremap <silent> <space>o  :<C-u>Denite coc-symbols<cr>
+"" "" Search symbols of current workspace
+"" "nnoremap <silent> <space>t  :<C-u>Denite coc-workspace<cr>
+"" "" Show diagnostics of current workspace
+"" "nnoremap <silent> <space>a  :<C-u>Denite coc-diagnostic<cr>
+"" "" Show available commands
+"" "nnoremap <silent> <space>c  :<C-u>Denite coc-command<cr>
+"" "" Show available services
+"" "nnoremap <silent> <space>s  :<C-u>Denite coc-service<cr>
+"" "" Show links of current buffer
+"" "nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
 """"""""""" rg for fzf
 
