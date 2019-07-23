@@ -8,9 +8,13 @@ if &diff
 endif
 
 " FZF also see tags. :lines maybe..
-map <SPACE><SPACE> :Denite buffer<RETURN>
-map <SPACE>f :Denite file_mru<RETURN>
-map <SPACE>o :DeniteProjectDir file/rec/git file/rec buffer<RETURN>
+map <space><space> :Denite buffer<cr>
+map <space>f       :Denite file_mru<cr>
+map <space>o       :DeniteProjectDir file/rec/git file/rec buffer<cr>
+map <space>:       :Denite command_history<cr>
+map <space>/       :Denite history:search<cr>
+map <space>t       :Denite tag<cr>
+
         "\ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
 "map <SPACE>f :Denite file/rec/git file/rec buffer<RETURN>
 "map <SPACE>f :Files<RETURN>
@@ -20,7 +24,7 @@ map <SPACE>o :DeniteProjectDir file/rec/git file/rec buffer<RETURN>
 map <SPACE>gf :GFiles<RETURN>
 map <SPACE>R :Rg<SPACE>
 map <SPACE>r :call RgCurrentWord()<cr>
-map <SPACE>/ :History/<RETURN>
+"jjkkkmap <SPACE>/ :History/<RETURN>
 
 map U :GundoToggle<CR>
 

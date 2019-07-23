@@ -86,6 +86,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'Shougo/denite.nvim'
+Plug 'neoclide/denite-extra'
 Plug 'Shougo/neomru.vim'
 Plug 'airblade/vim-rooter'
 "Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -257,6 +258,17 @@ call denite#custom#alias('source', 'file/rec/git', 'file/rec')
 call denite#custom#var('file/rec/git', 'command',
       \ ['git', 'ls-files', '-co', '--exclude-standard'])
 call denite#custom#option('default', 'prompt', '>')
+
+let s:denite_options = {
+      \ 'prompt' : '>',
+      \ 'split': 'floating',
+      \ 'start_filter': 1,
+      \ 'auto_resize': 1,
+      \ 'source_names': 'short',
+      \ 'direction': 'botright',
+      \ 'highlight_filter_background': 'CursorLine',
+      \ 'highlight_matched_char': 'Type',
+      \ }
 
 " Define mappings
 autocmd FileType denite call s:denite_my_settings()
