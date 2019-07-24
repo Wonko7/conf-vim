@@ -631,22 +631,22 @@ let g:deoplete#sources#ternjs#omit_object_prototype = 0
 """"""""""" gitcommit:
 
 augroup gitcom
-	au!
-	autocmd FileType gitcommit setlocal spell
+  au!
+  autocmd FileType gitcommit setlocal spell
 augroup END
 
 
 """"""""""" HEX/Binary: vim -b : edit binary using xxd-format!
 
 augroup Binary
-	au!
-	au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
-	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
-	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
-	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
-	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
-	au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
-	au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
+  au!
+  au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
+  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
+  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
+  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
+  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
 augroup END
 
 au BufNewFile,BufRead *todo,*TODO		set ft=wtodo
@@ -657,7 +657,7 @@ au BufNewFile,BufRead *.muttrc		set ft=muttrc
 
 " started In Diff-Mode set diffexpr (plugin not loaded yet)
 if &diff
-	let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
+  let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=patience")'
 endif
 
 
@@ -675,8 +675,8 @@ silent call My_set_style()
 
 set updatetime=2000
 augroup snipe_cursor
-	autocmd!
-	autocmd CursorHold   * call MyUnSetCursor()
-	autocmd CursorMoved  * call MySetCursor()
-	autocmd CursorMovedI * call MyUnSetCursor()
+  autocmd!
+  autocmd CursorHold   * call MyUnSetCursor()
+  autocmd CursorMoved  * call MySetCursor()
+  autocmd CursorMovedI * call MyUnSetCursor()
 augroup END
