@@ -14,6 +14,7 @@ map <space>o       :DeniteProjectDir file/rec/git file/rec buffer<cr>
 map <space>:       :Denite command_history<cr>
 map <space>/       :Denite history:search<cr>
 map <space>t       :Denite tag<cr>
+map z=             :Denite spell<cr>
 
         "\ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
 "map <SPACE>f :Denite file/rec/git file/rec buffer<RETURN>

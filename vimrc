@@ -628,6 +628,12 @@ let g:deoplete#sources#ternjs#include_keywords      = 1
 let g:deoplete#sources#ternjs#omit_object_prototype = 0
 
 
+""""""""""" gitcommit:
+
+augroup gitcom
+	au!
+	autocmd FileType gitcommit setlocal spell
+augroup END
 
 
 """"""""""" HEX/Binary: vim -b : edit binary using xxd-format!
@@ -635,7 +641,7 @@ let g:deoplete#sources#ternjs#omit_object_prototype = 0
 augroup Binary
 	au!
 	au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
-        au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
 	au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
 	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
 	au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
@@ -670,7 +676,7 @@ silent call My_set_style()
 set updatetime=2000
 augroup snipe_cursor
 	autocmd!
-	autocmd CursorHold * call MyUnSetCursor()
-	autocmd CursorMoved * call MySetCursor()
+	autocmd CursorHold   * call MyUnSetCursor()
+	autocmd CursorMoved  * call MySetCursor()
 	autocmd CursorMovedI * call MyUnSetCursor()
 augroup END
