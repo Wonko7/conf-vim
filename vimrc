@@ -305,17 +305,6 @@ function! s:denite_filter_my_settings() abort
                 \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
 endfunction
 
-"" "nnoremap <silent> <space>o  :<C-u>Denite coc-symbols<cr>
-"" "" Search symbols of current workspace
-"" "nnoremap <silent> <space>t  :<C-u>Denite coc-workspace<cr>
-"" "" Show diagnostics of current workspace
-"" "nnoremap <silent> <space>a  :<C-u>Denite coc-diagnostic<cr>
-"" "" Show available commands
-"" "nnoremap <silent> <space>c  :<C-u>Denite coc-command<cr>
-"" "" Show available services
-"" "nnoremap <silent> <space>s  :<C-u>Denite coc-service<cr>
-"" "" Show links of current buffer
-"" "nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
 """"""""""" rg for fzf
 
