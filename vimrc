@@ -40,7 +40,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-let g:node_host_prog = '/home/wjc/.nvm/versions/node/v8.12.0/bin/neovim-node-host'
+"let g:node_host_prog = '/home/wjc/.nvm/versions/node/v8.12.0/bin/neovim-node-host'
 
 call plug#begin('~/.vim/bundle')
 
