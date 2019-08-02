@@ -240,6 +240,7 @@ nmap g<space> Vip<cr> <cr>--
 nmap g*       Vip<cr>* <cr>--
 vmap =        <cr>=<cr>
 vmap <space>  <cr><space><cr>
+vmap *<space>  <cr>*<space><cr>
 
 """"""""""" git
 
@@ -301,6 +302,10 @@ function! s:denite_filter_my_settings() abort
         \ denite#do_map('do_action', 'vsplit')
   inoremap <silent><buffer><expr> <esc>
         \ denite#do_map('quit')
+  inoremap <silent><buffer> <down>
+        \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+  inoremap <silent><buffer> <up>
+        \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
   inoremap <silent><buffer> <C-j>
         \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
   inoremap <silent><buffer> <C-k>
@@ -341,7 +346,7 @@ let g:AutoPairsShortcutBackInsert = '<C-b>' " I really wanted to insert closing 
 "map <C-a> :call AutoPairsMoveCharacter('<')<CR>
 
 " see: https://github.com/luochen1990/rainbow for original conf
-!let g:rainbow_active = 1
+let g:rainbow_active = 1
 let g:rainbow_conf = {
       \	'ctermfgs': ['208', '34', '39', '205'],
       \	'operators': '_,_',
@@ -368,15 +373,17 @@ let g:ale_fixers = {
       \}
 
 let g:ale_linters      = {
-      \   'c': ['clang'],
-      \   'js': ['eslint'],
-      \   'javascript': ['eslint'],
-      \   'clojure': ['joker'],
+      \ 'c':          ['clang'],
+      \ 'js':         ['eslint'],
+      \ 'javascript': ['eslint'],
+      \ 'clojure':    ['joker'],
       \}
 
-let g:ale_sign_error   = '✘'
-let g:ale_sign_warning = '⚠'
-let g:ale_fix_on_save = 1
+
+let g:ale_sign_error         = '✘'
+let g:ale_sign_warning       = '⚠'
+let g:ale_fix_on_save        = 1
+let g:ale_completion_enabled = 1
 
 
 """"""""""" CamelCase, replace e w b:
