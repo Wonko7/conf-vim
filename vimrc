@@ -543,10 +543,13 @@ let g:deoplete#sources                   = {}
 let g:deoplete#sources.scala             = ['buffer', 'tags', 'omni']
 let g:deoplete#omni#input_patterns       = {}
 let g:deoplete#omni#input_patterns.scala = [
-  \ '[^. *\t]\.\w*',
-  \ '[:\[,] ?\w*',
-  \ '^import .*'
-  \]
+      \ '[^. *\t]\.\w*',
+      \ '[:\[,] ?\w*',
+      \ '^import .*'
+      \]
+call g:deoplete#custom#option('sources', {
+      \ '_': ['ale'],
+      \})
 
 """"""""""" perl
 
