@@ -16,6 +16,14 @@ map <space>/       :Denite history:search<cr>
 map <space>t       :Denite tag<cr>
 map z=             :Denite spell<cr>
 
+map g<space>s :Gstatus<cr>
+map g<space>d :Gdiffsplit<cr>
+map g<space>w :Gwrite<cr>
+map g<space>co :Gread<cr>
+map g<space>b :Gblame<cr>
+map g<space>c :Gcommit<cr>
+map g<space>ca :Gcommit -a<cr>
+
         "\ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
 "map <SPACE>f :Denite file/rec/git file/rec buffer<RETURN>
 "map <SPACE>f :Files<RETURN>
