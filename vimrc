@@ -68,8 +68,7 @@ Plug 'Yggdroot/indentLine'
 "Plug 'Valloric/YouCompleteMe'
 " show dumped shell escape colors as colors:
 Plug 'vim-scripts/AnsiEsc.vim'
-" FIXME tmp broken here: Plug 'vim-scripts/Gundo'
-Plug 'lambdalisue/suda.vim'
+Plug 'vim-scripts/Gundo'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -79,6 +78,7 @@ Plug 'jiangmiao/auto-pairs' "FIXME enable globally, disable for clojure?
 "Plug 'Shougo/neopairs.vim'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'justinmk/vim-sneak'
+
 " FIXME: only load this for js & co:
 "Plug 'bkad/CamelCaseMotion'
 
@@ -104,8 +104,8 @@ Plug 'luochen1990/rainbow'
 
 """ nvim completion:
 ""Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+""Plug 'roxma/nvim-yarp'
+""Plug 'roxma/vim-hug-neovim-rpc'
 ""Plug 'ncm2/ncm2-bufword'
 ""Plug 'ncm2/ncm2-tmux'
 ""Plug 'ncm2/ncm2-path'
@@ -117,17 +117,16 @@ Plug 'roxma/vim-hug-neovim-rpc'
 
 "deoplete:
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-clang'
-Plug 'zchee/deoplete-go'
-Plug 'zchee/deoplete-jedi'
+""  Plug 'zchee/deoplete-clang'
+""  Plug 'zchee/deoplete-go'
+""  Plug 'zchee/deoplete-jedi'
 Plug 'zchee/deoplete-zsh'
-Plug 'sebastianmarkow/deoplete-rust'
+""  Plug 'sebastianmarkow/deoplete-rust'
+"" FIXME: not actually used by deoplete look into this!
 Plug 'SevereOverfl0w/async-clj-omni'
-Plug 'Shougo/neco-syntax'
-Plug 'Shougo/neco-vim'
-Plug 'slashmili/alchemist.vim'
-Plug 'eagletmt/neco-ghc'
-Plug 'carlitux/deoplete-ternjs'
+""  Plug 'slashmili/alchemist.vim'
+""  Plug 'eagletmt/neco-ghc'
+""  Plug 'carlitux/deoplete-ternjs'
 
 "lang specific:
 Plug 'elixir-editors/vim-elixir'
@@ -215,7 +214,9 @@ let g:SuperTabDefaultCompletionType        = "<c-n>"
 if !exists('g:deoplete#omni#input_patterns')
   let g:deoplete#omni#input_patterns = {}
 endif
-
+" call deoplete#custom#option('sources', {
+"       \ '_': ['ale'],
+"       \})
 " ncm2
 
 "let g:ncm2#matcher = 'abbrfuzzy'
@@ -247,6 +248,10 @@ let g:gitgutter_max_signs = 2000
 highlight clear SignColumn
 let g:gitgutter_map_keys = 0
 
+augroup fugitive
+  au! BufReadPost fugitive://* set bufhidden=delete
+augroup END
+
 
 """"""""""" Denite:
 
@@ -271,35 +276,35 @@ let s:denite_options = {
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings()
   nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action')
+        \ denite#do_map('do_action')
   nnoremap <silent><buffer><expr> d
-  \ denite#do_map('do_action', 'delete')
+        \ denite#do_map('do_action', 'delete')
   nnoremap <silent><buffer><expr> p
-  \ denite#do_map('do_action', 'preview')
+        \ denite#do_map('do_action', 'preview')
   nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
+        \ denite#do_map('quit')
   nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
+        \ denite#do_map('open_filter_buffer')
   nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('toggle_select').'j'
+        \ denite#do_map('toggle_select').'j'
   nnoremap <silent><buffer><expr> <up>
-  \ denite#do_map('move_to_previous_line')
+        \ denite#do_map('move_to_previous_line')
   nnoremap <silent><buffer><expr> <down>
-  \ denite#do_map('move_to_next_line')
+        \ denite#do_map('move_to_next_line')
 endfunction
 
 autocmd FileType denite-filter call s:denite_filter_my_settings()
 function! s:denite_filter_my_settings() abort
-    imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
-    inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-    inoremap <silent><buffer><expr> <c-v>
-                \ denite#do_map('do_action', 'vsplit')
-    inoremap <silent><buffer><expr> <esc>
-                \ denite#do_map('quit')
-    inoremap <silent><buffer> <C-j>
-                \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
-    inoremap <silent><buffer> <C-k>
-                \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+  imap <silent><buffer> <tab> <Plug>(denite_filter_quit)
+  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+  inoremap <silent><buffer><expr> <c-v>
+        \ denite#do_map('do_action', 'vsplit')
+  inoremap <silent><buffer><expr> <esc>
+        \ denite#do_map('quit')
+  inoremap <silent><buffer> <C-j>
+        \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+  inoremap <silent><buffer> <C-k>
+        \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
 endfunction
 
 
@@ -322,6 +327,7 @@ function! RgCurrentWord()
   call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . l:curr_word . ' ' . l:dir, 1, fzf#vim#with_preview('right:30%', '?'), 0)
 endfunc
 
+
 """"""""""" rainbow & parens:
 
 let g:AutoPairsFlyMode = 1
@@ -335,7 +341,7 @@ let g:AutoPairsShortcutBackInsert = '<C-b>' " I really wanted to insert closing 
 "map <C-a> :call AutoPairsMoveCharacter('<')<CR>
 
 " see: https://github.com/luochen1990/rainbow for original conf
-let g:rainbow_active = 1
+!let g:rainbow_active = 1
 let g:rainbow_conf = {
       \	'ctermfgs': ['208', '34', '39', '205'],
       \	'operators': '_,_',
@@ -461,8 +467,8 @@ augroup END
 
 let g:deoplete#auto_completion_start_length = 1
 let g:deoplete#enable_smart_case            = 1
-let g:deoplete#keyword_patterns             = {}
-let g:deoplete#keyword_patterns.clojure     = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+"" "let g:deoplete#keyword_patterns             = {}
+"" "let g:deoplete#keyword_patterns.clojure     = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 " jjlet g:clojure_maxlines              = 1000
 " jjlet g:clojure_special_indent_words  = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,go-loop'
@@ -547,9 +553,7 @@ let g:deoplete#omni#input_patterns.scala = [
       \ '[:\[,] ?\w*',
       \ '^import .*'
       \]
-call g:deoplete#custom#option('sources', {
-      \ '_': ['ale'],
-      \})
+
 
 """"""""""" perl
 
@@ -662,10 +666,10 @@ source ~/.vim/fun.vim
 " init indentation:
 silent call My_set_style()
 
-set updatetime=2000
-augroup snipe_cursor
-  autocmd!
-  autocmd CursorHold   * call MyUnSetCursor()
-  autocmd CursorMoved  * call MySetCursor()
-  autocmd CursorMovedI * call MyUnSetCursor()
-augroup END
+"a set updatetime=2000
+"a augroup snipe_cursor
+"a   autocmd!
+"a   autocmd CursorHold   * call MyUnSetCursor()
+"a   autocmd CursorMoved  * call MySetCursor()
+"a   autocmd CursorMovedI * call MyUnSetCursor()
+"a augroup END

@@ -64,8 +64,8 @@ cmap ww :w!<RETURN>
 
 cmap cwd lcd %:p:h
 cmap :S %s/\v
-vmap / y/<C-R>"<CR>
-vmap ? y?<C-R>"<CR>
+vmap g/ y/<C-R>"<CR>
+vmap g? y?<C-R>"<CR>
 map Y y$
 
 map <F1> ggVGg?
