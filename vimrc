@@ -315,7 +315,7 @@ endfunction
 
 """"""""""" rg for fzf
 
-let g:skim_layout = { 'window': 'call FloatingFZF()' }
+"let g:skim_layout = { 'window': 'call FloatingFZF()' }
 command! -bang -nargs=* Rg call fzf#vim#rg_interactive(<q-args>, fzf#vim#with_preview('right:50%:hidden', 'alt-h'))
 
 "command! -bang -nargs=* Rg
