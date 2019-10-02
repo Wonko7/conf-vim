@@ -83,8 +83,8 @@ Plug 'justinmk/vim-sneak'
 "Plug 'bkad/CamelCaseMotion'
 
 " buffer/file nav:
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'lotabout/skim.vim'
 Plug 'Shougo/denite.nvim'
 Plug 'neoclide/denite-extra'
 Plug 'Shougo/neomru.vim'
