@@ -497,7 +497,7 @@ let mapleader      = "\\"
 
 " syntax/color only:
 let g:clojure_syntax_keywords = {
-      \ 'clojureSpecial': ["alet", "glet", "defn-spec"]
+      \ 'clojureSpecial': ["defn-spec"]
       \ }
 
 "let g:paredit_mode = 0
@@ -509,7 +509,7 @@ let g:paredit_matchlines = 100
 let g:paredit_leader = 'gaoeuaoeu'
 
 let g:clojure_fuzzy_indent = 1
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def',  '^match', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^alter-table', '^select', '^update', '^insert', '^delete', '^defn-spec', '^async']
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def',  '^match', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^alter-table', '^select', '^update', '^insert', '^delete', '^defn-spec', '^async', '^if-*', '^when-*', '^recursive-path']
 
 let g:sexp_enable_insert_mode_mappings = 0
 let g:sexp_insert_after_wrap = 1
