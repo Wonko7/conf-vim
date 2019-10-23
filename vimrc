@@ -156,7 +156,9 @@ Plug 'tpope/vim-fireplace'
 Plug 'guns/vim-clojure-static'
 Plug 'wonko7/vim-sexp-mappings-for-regular-people'
 Plug 'guns/vim-sexp'
-Plug 'kovisoft/paredit'
+" FIXME: https://github.com/kovisoft/paredit/issues/25
+"Plug 'kovisoft/paredit'
+Plug 'Wonko7/paredit'
 "Plug 'vim-scripts/paredit.vim'
 
 call plug#end()
