@@ -84,7 +84,9 @@ Plug 'justinmk/vim-sneak'
 
 " buffer/file nav:
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 Plug 'lotabout/skim.vim'
+
 Plug 'Shougo/denite.nvim'
 Plug 'neoclide/denite-extra'
 Plug 'Shougo/neomru.vim'
@@ -327,15 +329,15 @@ command! -bang -nargs=* Rg call fzf#vim#rg_interactive(<q-args>, fzf#vim#with_pr
 "      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
 "      \   <bang>0)
 "
-"function! RgCurrentWord()
-"  let l:dir = system('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel ' . expand('%:p') . ' | head -n 1')
-"  if !filereadable(l:dir)
-"    " FIXME: might make more sense to use pwd... try it out
-"    let l:dir = expand('%:p:h')
-"  endif
-"  let l:curr_word = shellescape(expand('<cword>'))
-"  call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . l:curr_word . ' ' . l:dir, 1, fzf#vim#with_preview('right:30%', '?'), 0)
-"endfunc
+function! RgCurrentWord()
+  let l:dir = system('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel ' . expand('%:p') . ' | head -n 1')
+  if !filereadable(l:dir)
+    " FIXME: might make more sense to use pwd... try it out
+    let l:dir = expand('%:p:h')
+  endif
+  let l:curr_word = shellescape(expand('<cword>'))
+  call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . l:curr_word . ' ' . l:dir, 1, fzf#vim#with_preview('right:30%', '?'), 0)
+endfunc
 
 
 """"""""""" rainbow & parens:
