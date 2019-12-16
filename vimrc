@@ -320,23 +320,19 @@ endfunction
 """"""""""" rg for fzf
 
 "let g:skim_layout = { 'window': 'call FloatingFZF()' }
-command! -bang -nargs=* Rg call fzf#vim#rg_interactive(<q-args>, fzf#vim#with_preview('right:50%:hidden', 'alt-h'))
+"command! -bang -nargs=* Rg call fzf#vim#rg_interactive(<q-args>, fzf#vim#with_preview('right:50%:hidden', 'alt-h'))
 
-"command! -bang -nargs=* Rg
-"      \ call fzf#vim#grep(
-"      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-"      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-"      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-"      \   <bang>0)
-"
+command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%', '?'),
+      \   <bang>0)
+
 function! RgCurrentWord()
-  let l:dir = system('cd ' . expand('%:p:h') . ' && git rev-parse --show-toplevel ' . expand('%:p') . ' | head -n 1')
-  if !filereadable(l:dir)
-    " FIXME: might make more sense to use pwd... try it out
-    let l:dir = expand('%:p:h')
-  endif
   let l:curr_word = shellescape(expand('<cword>'))
-  call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . l:curr_word . ' ' . l:dir, 1, fzf#vim#with_preview('right:30%', '?'), 0)
+  "call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . l:curr_word . ' ' . l:dir, 1, fzf#vim#with_preview('right:30%', '?'), 0)
+  call fzf#vim#grep('rg --column --line-number --no-heading --color=always ' . l:curr_word, 1, fzf#vim#with_preview('right:50%', '?'), 0)
 endfunc
 
 
@@ -679,6 +675,7 @@ source ~/.vim/fun.vim
 
 " init indentation:
 silent call My_set_style()
+silent call My_set_spell()
 
 "a set updatetime=2000
 "a augroup snipe_cursor

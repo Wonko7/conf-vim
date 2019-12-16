@@ -34,18 +34,6 @@ function! My_set_style()
 		set comments=sl:/*,mb:\ *,ex:\ */
 		let g:my_set_style = 1
 		echo "normal-4 (indent=tab, len=4, tab_display=4)"
-	"if g:my_set_style == 0
-	"	set expandtab
-	"	set softtabstop=3
-	"	set tabstop=8
-	"	set shiftwidth=3
-	"	set smarttab
-	"	set comments=sl:/*,mb:\ *,ex:\ */
-	"	let g:DoxygenToolkit_interCommentTag = "* "
-	"	let g:DoxygenToolkit_interCommentBlock = "* "
-	"	let g:DoxygenToolkit_cinoptions = "c1C1"
-	"	echo "fred (indent=space, len=3, tab_display=8)"
-	"	let g:my_set_style = 1 
 	elseif g:my_set_style == 1
 		set noexpandtab
 		set softtabstop=8
@@ -57,21 +45,21 @@ function! My_set_style()
 		let g:DoxygenToolkit_interCommentBlock = "* "
 		let g:DoxygenToolkit_cinoptions = "c1C1"
 		echo "kernel-8 (indent=tab, len=8, tab_display=8)"
-		let g:my_set_style = 2 
-	elseif g:my_set_style == 2
-		set noexpandtab
-		set softtabstop=8
-		set tabstop=8
-		set shiftwidth=8
-		set smarttab
-		set comments=sl:/*,mb:**,ex:*/
-		let g:DoxygenToolkit_interCommentTag = "** "
-		let g:DoxygenToolkit_interCommentBlock = "** "
-		let g:DoxygenToolkit_cinoptions = "c0C1"
-                if g:my_set_style != -1
-			echo "kernel-gnu-comments-8 (indent=tab, len=2, tab_display=8)"
-		endif
-		let g:my_set_style = 3 
+		let g:my_set_style = 2
+	" elseif g:my_set_style == 2
+	" 	set noexpandtab
+	" 	set softtabstop=8
+	" 	set tabstop=8
+	" 	set shiftwidth=8
+	" 	set smarttab
+	" 	set comments=sl:/*,mb:**,ex:*/
+	" 	let g:DoxygenToolkit_interCommentTag = "** "
+	" 	let g:DoxygenToolkit_interCommentBlock = "** "
+	" 	let g:DoxygenToolkit_cinoptions = "c0C1"
+        "         if g:my_set_style != -1
+	" 		echo "kernel-gnu-comments-8 (indent=tab, len=8, tab_display=8)"
+	" 	endif
+	" 	let g:my_set_style = 3
 	else " "|| g:my_set_style == -1
 		set expandtab
 		set softtabstop=2
@@ -95,9 +83,9 @@ fu! SeeTab()
 		redir END
 		let g:SeeTabSpecialKey = @a
 		let @a = regA
-		silent! hi SpecialKey guifg=grey25  ctermfg=black 
+		silent! hi SpecialKey guifg=grey25  ctermfg=black
 		set list
-		set listchars=tab:\|\ 
+		set listchars=tab:\|\
 	else
 		let &list = g:SeeTab_list
 		let &listchars = &listchars

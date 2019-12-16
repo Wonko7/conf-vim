@@ -70,6 +70,14 @@ map Y y$
 
 map <F1> ggVGg?
 
+" wrapping ys:
+nmap <M-y> ys
+nmap <M-w> ysiw
+nmap <M-W> ys%
+nmap <M-i> ysiw)
+nmap <M-I> ys%)
+nmap <M-a> ysiw]
+nmap <M-A> ys%]
 
 " cscope: FZF? see https://gist.github.com/amitab/cd051f1ea23c588109c6cfcb7d1d5776
 nnoremap <silent> <space>s  :call Cscope('8', expand('<cword>'))<CR>
