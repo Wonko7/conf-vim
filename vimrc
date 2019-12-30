@@ -415,9 +415,33 @@ endif
 let g:airline_powerline_fonts = 1
 
 let g:airline_symbols.branch                            = '⎇'
-let g:airline#extensions#whitespace#trailing_format     = 'WS:%s'
-let g:airline#extensions#whitespace#mixed_indent_format = 'MI:%s'
 let g:airline#extensions#whitespace#enabled             = 0
+let g:airline_detect_spell=0
+"let g:airline_inactive_alt_sep=1
+let g:airline_mode_map = {
+      \ '__'     : '-',
+      \ 'c'      : 'C',
+      \ 'i'      : 'I',
+      \ 'ic'     : 'I',
+      \ 'ix'     : 'I',
+      \ 'n'      : 'N',
+      \ 'multi'  : 'M',
+      \ 'ni'     : 'N',
+      \ 'no'     : 'N',
+      \ 'R'      : 'R',
+      \ 'Rv'     : 'R',
+      \ 's'      : 'S',
+      \ 'S'      : 'S',
+      \ ''     : 'S',
+      \ 't'      : 'T',
+      \ 'v'      : 'V',
+      \ 'V'      : 'V',
+      \ ''     : 'V',
+      \ }
+"let g:airline#extensions#branch#enabled=0
+let g:airline_section_b = ''
+let g:airline_section_z = '%3p%% %3l/%L:%3v'
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 
 
 """"""""""" sneak
