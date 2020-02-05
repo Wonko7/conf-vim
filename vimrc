@@ -147,6 +147,8 @@ Plug 'leafgarland/typescript-vim'
 "scala;
 Plug 'derekwyatt/vim-scala'
 Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
+"rust
+Plug 'rust-lang/rust.vim'
 "clj:
 "Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 "Plug 'bhurlow/vim-parinfer',
