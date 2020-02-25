@@ -7,21 +7,30 @@ if &diff
   map gN [czz
 endif
 
-" FZF also see tags. :lines maybe..
-map <space><space> :Denite buffer<cr>
-map <space>f       :Denite file_mru<cr>
-map <space>o       :DeniteProjectDir file/rec/git file/rec buffer<cr>
-map <space>:       :Denite command_history<cr>
-map <space>/       :Denite history:search<cr>
-map <space>t       :Denite tag<cr>
+" skim/fzf:
+map <space><space> :Buffers<cr>
+map <space>f       :History<cr>
+map <space>o       :GFiles<cr>
+map <space>:       :History:<cr>
+map <space>/       :History/<cr>
+map <space>t       :Tags<cr>
 map z=             :Denite spell<cr>
 
-map g<space>s :Gstatus<cr>
-map g<space>d :Gdiffsplit<cr>
-map g<space>w :Gwrite<cr>
+" Denite
+" map <space><space> :Denite buffer<cr>
+" map <space>f       :Denite file_mru<cr>
+" map <space>o       :DeniteProjectDir file/rec/git file/rec buffer<cr>
+" map <space>:       :Denite command_history<cr>
+" map <space>/       :Denite history:search<cr>
+" map <space>t       :Denite tag<cr>
+" map z=             :Denite spell<cr>
+
+map g<space>s  :Gstatus<cr>
+map g<space>d  :Gdiffsplit<cr>
+map g<space>w  :Gwrite<cr>
 map g<space>co :Gread<cr>
-map g<space>b :Gblame<cr>
-map g<space>c :Gcommit<cr>
+map g<space>b  :Gblame<cr>
+map g<space>c  :Gcommit<cr>
 map g<space>ca :Gcommit -a<cr>
 
         "\ `finddir('.git', ';') != '' ? 'file/rec/git' : 'file/rec'`
