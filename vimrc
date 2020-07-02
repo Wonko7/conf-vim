@@ -44,6 +44,12 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
+" LSP
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+
 Plug 'altercation/vim-colors-solarized'
 Plug 'chrisbra/vim-diff-enhanced'
 Plug 'jamessan/vim-gnupg'
@@ -390,6 +396,12 @@ let g:ale_sign_warning       = '⚠'
 let g:ale_fix_on_save        = 1
 let g:ale_completion_enabled = 1
 
+""""""""""" LSP:
+let g:LanguageClient_settingsPath=".lsp/settings.json"
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'clojure': ['bash', '-c', '~/local/bin/clojure-lsp'],
+    \ }
 
 """"""""""" CamelCase, replace e w b:
 
@@ -532,8 +544,12 @@ let g:paredit_shortmaps = 0
 let g:paredit_electric_return = 0
 let g:paredit_smartjump = 0
 let g:paredit_matchlines = 100
-let g:paredit_leader = 'gaoeuaoeu'
+let g:paredit_leader = '<enter>'
+let mapleader      = "\<cr>"
+let maplocalleader = "\<cr>"
 
+
+let g:clojure_maxlines = 1000
 let g:clojure_fuzzy_indent = 1
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def',  '^match', '^let', '^glet', '^alet', '^go-loop', '^create-table', '^alter-table', '^select', '^update', '^insert', '^delete', '^defn-spec', '^async', '^if-*', '^when-*', '^recursive-path']
 
@@ -561,14 +577,48 @@ map gj :let old = @/<cr>:s/\s*\n\s*//<cr>:call histdel('/', -1)<cr>:let @/ = old
 function! MyPiggie()
   Connect nrepl://localhost:9999
   Piggieback :main
+  "Piggieback :app
 endfunction
 " cljs
+
+function! Expand(exp) abort
+    let l:result = expand(a:exp)
+    return l:result ==# '' ? '' : "file://" . l:result
+endfunction
+
 augroup Clojure
   " this is tmp until parinfer fixes slurping:
   au FileType clojure noremap <buffer> <Right> >>
   au FileType clojure noremap <buffer> <Left> <<
   au FileType clojure let b:AutoPairs = {'(':')', '[':']', '{':'}', '"':'"'}
+
+  nnoremap <silent> crcc :call LanguageClient#workspace_executeCommand('cycle-coll', [Expand('%:p'), line('.') - 1, col('.') - 1])<CR>
+  nnoremap <silent> crth :call LanguageClient#workspace_executeCommand('thread-first', [Expand('%:p'), line('.') - 1, col('.') - 1])<CR>
+  nnoremap <silent> crtt :call LanguageClient#workspace_executeCommand('thread-last', [Expand('%:p'), line('.') - 1, col('.') - 1])<CR>
+  nnoremap <silent> crtf :call LanguageClient#workspace_executeCommand('thread-first-all', [Expand('%:p'), line('.') - 1, col('.') - 1])<CR>
+  nnoremap <silent> crtl :call LanguageClient#workspace_executeCommand('thread-last-all', [Expand('%:p'), line('.') - 1, col('.') - 1])<CR>
+  nnoremap <silent> crml :call LanguageClient#workspace_executeCommand('move-to-let', [Expand('%:p'), line('.') - 1, col('.') - 1, input('Binding name: ')])<CR>
+  nnoremap <silent> cril :call LanguageClient#workspace_executeCommand('introduce-let', [Expand('%:p'), line('.') - 1, col('.') - 1, input('Binding name: ')])<CR>
+  nnoremap <silent> crel :call LanguageClient#workspace_executeCommand('expand-let', [Expand('%:p'), line('.') - 1, col('.') - 1])<CR>
+  nnoremap <silent> cram :call LanguageClient#workspace_executeCommand('add-missing-libspec', [Expand('%:p'), line('.') - 1, col('.') - 1])<CR>
+
+  " √ 	add-missing-libspec
+  " - 	clean-ns
+  " √ 	cycle-coll
+  " √ 	cycle-privacy
+  " √ 	expand-let
+  " √ 	extract-function 	[document-uri, line, column, function-name]
+  " √ 	inline-symbol
+  " √ 	introduce-let 	[document-uri, line, column, binding-name]
+  " √ 	move-to-let 	[document-uri, line, column, binding-name]
+  " √ 	thread-first
+  " √ 	thread-first-all
+  " √ 	thread-last
+  " √ 	thread-last-all
+  " √ 	unwind-all
+  " √ 	unwind-thread
 augroup END
+
 
 
 """"""""""" scala
@@ -667,16 +717,16 @@ augroup END
 
 """"""""""" HEX/Binary: vim -b : edit binary using xxd-format!
 
-augroup Binary
-  au!
-  au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
-  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
-  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
-  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
-  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
-  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
-  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
-augroup END
+"augroup Binary
+"  au!
+"  au BufReadPre   *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin let &bin=1
+"  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+"  au BufReadPost  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set ft=xxd | endif
+"  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd -r
+"  au BufWritePre  *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin endif
+"  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin if &bin | %!xxd
+"  au BufWritePost *.o,*.out,*.obj,*.a,*.so,*.exe,*.bin set nomod | endif
+"augroup END
 
 au BufNewFile,BufRead *todo,*TODO		set ft=wtodo
 au BufNewFile,BufRead *.muttrc		set ft=muttrc
