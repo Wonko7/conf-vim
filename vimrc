@@ -8,6 +8,7 @@ set showcmd				" display incomplete commands
 set showtabline=0
 set runtimepath+=",~/conf/vim/"
 set lazyredraw
+set conceallevel=0
 
 if &t_Co > 2 || has("gui_running")
   syntax on
