@@ -53,8 +53,7 @@ call plug#begin('~/.vim/bundle')
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'chrisbra/vim-diff-enhanced'
-Plug 'jamessan/vim-gnupg'
-" open/fite/at/line-number.txt:88
+Plug 'jamessan/vim-gnupg' , { 'branch': 'main' }
 Plug 'kopischke/vim-fetch'
 " cxiw mark word to exchange:
 Plug 'tommcdo/vim-exchange'
@@ -153,7 +152,6 @@ Plug 'jparise/vim-graphql'
 Plug 'leafgarland/typescript-vim'
 "scala;
 Plug 'derekwyatt/vim-scala'
-Plug 'ensime/ensime-vim', { 'do': ':UpdateRemotePlugins' }
 "rust
 Plug 'rust-lang/rust.vim'
 "clj:
