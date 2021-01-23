@@ -219,7 +219,7 @@ set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
 let g:deoplete#enable_at_startup           = 1
-let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/7/lib64/libclang.so'
+"let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/7/lib64/libclang.so'
 let g:SuperTabDefaultCompletionType        = "<c-n>"
 
 if !exists('g:deoplete#omni#input_patterns')
