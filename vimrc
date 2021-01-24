@@ -124,11 +124,11 @@ Plug 'luochen1990/rainbow'
 ""Plug 'ncm2/ncm2-vim'
 
 "deoplete:
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 ""  Plug 'zchee/deoplete-clang'
 ""  Plug 'zchee/deoplete-go'
 ""  Plug 'zchee/deoplete-jedi'
-Plug 'zchee/deoplete-zsh'
+"Plug 'zchee/deoplete-zsh'
 ""  Plug 'sebastianmarkow/deoplete-rust'
 "" FIXME: not actually used by deoplete look into this!
 Plug 'SevereOverfl0w/async-clj-omni'
@@ -218,13 +218,13 @@ set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr
 
 "set completeopt+=noinsert,noselect
 "set completeopt-=preview
-let g:deoplete#enable_at_startup           = 1
+"let g:deoplete#enable_at_startup           = 1
 "let g:deoplete#sources#clang#libclang_path = '/usr/lib64/llvm/7/lib64/libclang.so'
 let g:SuperTabDefaultCompletionType        = "<c-n>"
 
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
+"if !exists('g:deoplete#omni#input_patterns')
+  "let g:deoplete#omni#input_patterns = {}
+"endif
 " call deoplete#custom#option('sources', {
 "       \ '_': ['ale'],
 "       \})
@@ -512,8 +512,8 @@ augroup END
 
 """"""""""" clojure:
 
-let g:deoplete#auto_completion_start_length = 1
-let g:deoplete#enable_smart_case            = 1
+"let g:deoplete#auto_completion_start_length = 1
+"let g:deoplete#enable_smart_case            = 1
 "" "let g:deoplete#keyword_patterns             = {}
 "" "let g:deoplete#keyword_patterns.clojure     = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
@@ -692,19 +692,19 @@ let g:javascript_opfirst = '\C\%([<>=,?^%|/&]\|\([-:+]\)\1\@!\|\*\+\|!=\|in\%(st
 "augroup END
 
 "Add extra filetypes
-let g:deoplete#sources#ternjs#filetypes = [
-                \ 'jsx',
-                \ 'javascript.jsx',
-                \ 'vue',
-                \ ]
-let g:deoplete#sources#ternjs#case_insensitive      = 1
-" maybe:
-let g:deoplete#sources#ternjs#docs                  = 1
-let g:deoplete#sources#ternjs#types                 = 1
-let g:deoplete#sources#ternjs#filter                = 0
-let g:deoplete#sources#ternjs#include_keywords      = 1
-let g:deoplete#sources#ternjs#omit_object_prototype = 0
-
+"let g:deoplete#sources#ternjs#filetypes = [
+"                \ 'jsx',
+"                \ 'javascript.jsx',
+"                \ 'vue',
+"                \ ]
+"let g:deoplete#sources#ternjs#case_insensitive      = 1
+"" maybe:
+"let g:deoplete#sources#ternjs#docs                  = 1
+"let g:deoplete#sources#ternjs#types                 = 1
+"let g:deoplete#sources#ternjs#filter                = 0
+"let g:deoplete#sources#ternjs#include_keywords      = 1
+"let g:deoplete#sources#ternjs#omit_object_prototype = 0
+"
 
 """"""""""" gitcommit:
 
